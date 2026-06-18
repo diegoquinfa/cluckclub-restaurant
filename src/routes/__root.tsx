@@ -36,7 +36,7 @@ export const Route = createRootRoute({
       {
         name: "description",
         content:
-          "Cluck Club: cocina oculta en Cartagena. Tenders empanizados a mano, alitas, hamburguesas y perros calientes. Pedí por WhatsApp y recibí en tu casa.",
+          "Cluck Club: cocina oculta en Cartagena. Tenders empanizados, alitas, hamburguesas y perros calientes. Pide por WhatsApp y recibe en tu casa.",
       },
       {
         name: "author",

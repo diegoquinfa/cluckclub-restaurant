@@ -78,11 +78,13 @@ export function Marquee({
 
     return () => {
       tween.kill();
-      clones.forEach((clone) => clone.remove());
+      clones.forEach((clone) => {
+        clone.remove();
+      });
       gsap.set([track], { x: 0 });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [speed, direction]);
+  }, [speed, direction, getGap]);
 
   function getGap(el: HTMLElement) {
     const styles = window.getComputedStyle(el);
