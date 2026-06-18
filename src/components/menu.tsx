@@ -124,7 +124,7 @@ export function Menu() {
               CRUNCH.
             </span>
             <span className="block text-[clamp(2.5rem,8vw,5rem)] text-red">
-              REPETÍ.
+              REPETES.
             </span>
           </h2>
         </div>
