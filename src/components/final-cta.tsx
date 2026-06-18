@@ -44,7 +44,7 @@ export function Footer() {
         <div className="font-mono text-xs uppercase tracking-widest text-bone/70">
           <p>Cocina oculta · Cartagena, Colombia</p>
           <p className="mt-1">Mar–Dom · 17:00 — 23:00</p>
-          <p className="mt-1">@cluckclub.co</p>
+          <p className="mt-1">@cluckclub.col</p>
         </div>
       </div>
       <p className="mx-auto mt-8 max-w-6xl border-t-[3px] border-bone/20 pt-6 font-mono text-[0.65rem] uppercase tracking-widest text-bone/50">
