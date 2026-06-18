@@ -20,7 +20,7 @@ export function Zones() {
           <h2 className="mt-3 font-display text-[clamp(2.2rem,7vw,4.5rem)] leading-none text-ink">
             SI ESTÁS ACÁ,
             <br />
-            <span className="text-red">YA CASI MORDÉS</span>
+            <span className="text-red">YA CASI PRUEBAS</span>
           </h2>
           <p className="mt-5 max-w-md font-sans text-base leading-relaxed text-ink/80">
             Operamos como cocina oculta — no nos buscás en un local, te buscamos
