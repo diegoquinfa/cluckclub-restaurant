@@ -15,13 +15,13 @@ export function SiteNav() {
         </Link>
 
         <nav className="hidden items-center gap-6 font-mono text-xs uppercase tracking-widest text-ink md:flex">
-          <Link to="/" hash="#menu" className="hover:text-red">
+          <Link to="/" hash="menu" className="hover:text-red">
             Menú
           </Link>
-          <Link to="/" hash="#proceso" className="hover:text-red">
+          <Link to="/" hash="proceso" className="hover:text-red">
             Cómo funciona
           </Link>
-          <Link to="/" hash="#zonas" className="hover:text-red">
+          <Link to="/" hash="zonas" className="hover:text-red">
             Zonas
           </Link>
         </nav>
