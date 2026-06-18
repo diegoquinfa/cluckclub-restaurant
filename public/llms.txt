@@ -1,0 +1,28 @@
+# Cluck Club
+
+> Cocina oculta en Cartagena, Colombia. Vendemos tenders de pollo empanizados a mano, alitas, hamburguesas, perros calientes, burritos y acompañamientos. Los pedidos se reciben por WhatsApp y se entregan en múltiples zonas de Cartagena.
+
+Cluck Club no tiene local físico. Operamos como cocina oculta: el cliente escribe por WhatsApp, preparamos el pedido al momento y lo enviamos a su dirección. Nuestro horario de atención es martes a domingo de 17:00 a 23:00.
+
+## Menú
+
+- [Platos fuertes, pollo, alitas y acompañamientos](https://cluckclub.co/#menu): Carta completa con ingredientes, porciones y sabores.
+
+## Cómo pedir
+
+- [Proceso de pedido](https://cluckclub.co/#proceso): Pide por WhatsApp, empanizamos a mano, freímos al momento y te lo enviamos.
+- [Pedir por WhatsApp](https://wa.me/573026688105?text=Hola%20Cluck%20Club%2C%20quiero%20pedir): Enlace directo para iniciar un pedido.
+
+## Zonas de entrega
+
+- [Zonas donde entregamos](https://cluckclub.co/#zonas): Centro Histórico, Getsemaní, Bocagrande, Castillogrande, Manga, Pie de la Popa, Crespo y Marbella.
+
+## Información técnica
+
+- [Sitemap](https://cluckclub.co/sitemap.xml): Índice XML de URLs del sitio.
+- [robots.txt](https://cluckclub.co/robots.txt): Directrices de rastreo para bots.
+- [Manifest](https://cluckclub.co/manifest.json): Configuración PWA del sitio.
+
+## Opcional
+
+- [Instagram](https://www.instagram.com/cluckclub.col): Fotos, novedades y contacto social.
