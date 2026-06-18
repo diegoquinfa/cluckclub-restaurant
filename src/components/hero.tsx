@@ -1,6 +1,6 @@
-import { WHATSAPP_URL } from "#/constants/W_URL";
 import { Link } from "@tanstack/react-router";
 import { Image } from "@unpic/react";
+import { WHATSAPP_URL } from "#/constants/W_URL";
 import TextMarquee from "./text-marquee";
 
 export function Hero() {
@@ -52,7 +52,7 @@ export function Hero() {
             </a>
             <Link
               to="/"
-              hash="#menu"
+              hash="menu"
               className="border-[3px] border-ink bg-transparent px-6 py-3 font-mono text-sm font-bold uppercase tracking-widest text-ink shadow-[6px_6px_0_0_var(--color-orange)] transition-transform hover:-translate-x-1 hover:-translate-y-1 active:translate-x-0 active:translate-y-0 md:text-base"
             >
               Ver el menú
@@ -80,7 +80,7 @@ export function Hero() {
 
           <div className="relative z-10 animate-float border-[5px] border-ink bg-yellow p-3 shadow-[12px_12px_0_0_var(--color-orange)]">
             <Image
-              src="/box.png"
+              src="/cluck-club-caja-tenders.png"
               alt="Caja de Cluck Club abierta llena de tenders crujientes"
               width={640}
               height={640}

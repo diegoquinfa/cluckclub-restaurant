@@ -43,7 +43,7 @@ export function Footer() {
 
         <div className="font-mono text-xs uppercase tracking-widest text-bone/70">
           <p>Cocina oculta · Cartagena, Colombia</p>
-          <p className="mt-1">Lun–Dom · 12:00 — 23:00</p>
+          <p className="mt-1">Mar–Dom · 17:00 — 23:00</p>
           <p className="mt-1">@cluckclub.co</p>
         </div>
       </div>

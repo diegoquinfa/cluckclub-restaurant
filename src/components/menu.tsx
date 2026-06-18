@@ -1,5 +1,5 @@
-import { WHATSAPP_URL } from "#/constants/W_URL";
 import { Image } from "@unpic/react";
+import { WHATSAPP_URL } from "#/constants/W_URL";
 
 type MainDish = {
   name: string;
@@ -12,7 +12,7 @@ type MainDish = {
 const MAIN_DISHES: MainDish[] = [
   {
     name: "Perro Caliente",
-    img: "/perro.png",
+    img: "/cluck-club-perro-caliente-tenders.png",
     alt: "Perro caliente con tenders, cheddar y tocineta crunch",
     featured: true,
     ingredients: [
@@ -27,7 +27,7 @@ const MAIN_DISHES: MainDish[] = [
   },
   {
     name: "Hamburguesa 1",
-    img: "/burger.png",
+    img: "/cluck-club-hamburguesa-pollo.png",
     alt: "Hamburguesa de churrasco de pollo apanado con queso munster",
     ingredients: [
       "Churrasco pollo apanado (250 gr)",
@@ -40,7 +40,7 @@ const MAIN_DISHES: MainDish[] = [
   },
   {
     name: "Hamburguesa 2",
-    img: "/burger.png",
+    img: "/cluck-club-hamburguesa-pollo.png",
     alt: "Hamburguesa de pollo apanado con doritos y guacamole",
     ingredients: [
       "Churrasco pollo apanado (250 gr)",
@@ -53,7 +53,7 @@ const MAIN_DISHES: MainDish[] = [
   },
   {
     name: "Burrito",
-    img: "/burrito.png",
+    img: "/cluck-club-burrito-tenders.png",
     alt: "Burrito relleno de tenders, queso mozzarella y cheddar",
     ingredients: [
       "3 tenders (65 gr c/u)",
@@ -183,7 +183,7 @@ export function Menu() {
             <article className="flex flex-col border-[3px] border-ink bg-bone shadow-[6px_6px_0_0_var(--color-ink)]">
               <div className="border-b-[3px] border-ink bg-cream p-4">
                 <Image
-                  src="/tenders.png"
+                  src="/cluck-club-tenders-pollo.png"
                   alt="Tenders de pollo crujientes"
                   width={400}
                   height={300}
@@ -217,7 +217,7 @@ export function Menu() {
             <article className="flex flex-col border-[3px] border-ink bg-bone shadow-[6px_6px_0_0_var(--color-ink)]">
               <div className="border-b-[3px] border-ink bg-cream p-4">
                 <Image
-                  src="/wings.png"
+                  src="/cluck-club-alitas-pollo.png"
                   alt="Alitas de pollo glaseadas"
                   width={400}
                   height={300}
@@ -267,7 +267,7 @@ export function Menu() {
             <article className="flex flex-col border-[3px] border-ink bg-bone shadow-[6px_6px_0_0_var(--color-ink)]">
               <div className="border-b-[3px] border-ink bg-cream p-4">
                 <Image
-                  src="/fries.png"
+                  src="/cluck-club-papas-francesas.png"
                   alt="Papas francesas con salsa cluck y cheddar"
                   width={400}
                   height={300}

@@ -1,6 +1,7 @@
 {
-  "short_name": "TanStack App",
-  "name": "Create TanStack App Sample",
+  "short_name": "Cluck Club",
+  "name": "Cluck Club - Tenders y alitas en Cartagena",
+  "description": "Cocina oculta en Cartagena. Tenders empanizados a mano, alitas, hamburguesas y perros calientes. Pedí por WhatsApp.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,18 +9,17 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "cluck-club-caja-tenders.png",
       "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "logo512.png",
-      "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#ffc42e",
+  "background_color": "#f3e9d2",
+  "orientation": "portrait",
+  "scope": "/",
+  "lang": "es-CO"
 }

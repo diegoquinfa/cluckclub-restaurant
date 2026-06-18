@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router'
+import { Link } from "@tanstack/react-router";
 
 export function NotFound() {
   return (
@@ -24,8 +24,8 @@ export function NotFound() {
               </h1>
 
               <p className="mt-5 max-w-xl font-sans text-base leading-relaxed text-ink/80 md:text-lg">
-                Esa ruta no existe o ya salio volando. Volve al inicio y segui por
-                donde si hay crunch.
+                Esa ruta no existe o ya salio volando. Volve al inicio y segui
+                por donde si hay crunch.
               </p>
 
               <div className="mt-8 flex flex-wrap gap-4">
@@ -47,7 +47,9 @@ export function NotFound() {
             <div className="grid gap-3 self-end font-mono text-xs uppercase tracking-[0.2em] text-ink/75 md:justify-items-end">
               <div className="w-full border-[3px] border-ink bg-bone p-4 shadow-[6px_6px_0_0_var(--color-ink)] md:max-w-xs">
                 <p className="text-red">Status</p>
-                <p className="mt-2 text-xl font-bold text-ink">404 / Route Missing</p>
+                <p className="mt-2 text-xl font-bold text-ink">
+                  404 / Route Missing
+                </p>
               </div>
               <div className="w-full border-[3px] border-ink bg-ink p-4 text-bone shadow-[6px_6px_0_0_var(--color-orange)] md:max-w-xs">
                 <p className="text-yellow">Hint</p>
@@ -60,5 +62,5 @@ export function NotFound() {
         </section>
       </div>
     </main>
-  )
+  );
 }

@@ -1,5 +1,5 @@
-import { WHATSAPP_URL } from "#/constants/W_URL";
 import { Link } from "@tanstack/react-router";
+import { WHATSAPP_URL } from "#/constants/W_URL";
 
 export function SiteNav() {
   return (

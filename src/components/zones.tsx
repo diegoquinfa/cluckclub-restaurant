@@ -7,7 +7,7 @@ const ZONES = [
   "Pie de la Popa",
   "Crespo",
   "Marbella",
-]
+];
 
 export function Zones() {
   return (
@@ -23,8 +23,8 @@ export function Zones() {
             <span className="text-red">YA CASI MORDÉS</span>
           </h2>
           <p className="mt-5 max-w-md font-sans text-base leading-relaxed text-ink/80">
-            Operamos como cocina oculta — no nos buscás en un local, te
-            buscamos nosotros. Estas son las zonas donde llegamos crujiendo.
+            Operamos como cocina oculta — no nos buscás en un local, te buscamos
+            nosotros. Estas son las zonas donde llegamos crujiendo.
           </p>
         </div>
 
@@ -44,5 +44,5 @@ export function Zones() {
         </div>
       </div>
     </section>
-  )
+  );
 }
