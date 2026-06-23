@@ -3,6 +3,10 @@ import { Image } from "@unpic/react";
 import { WHATSAPP_URL } from "#/constants/W_URL";
 import TextMarquee from "./text-marquee";
 
+function scrollToMenu() {
+  document.getElementById("menu")?.scrollIntoView({ behavior: "smooth" });
+}
+
 export function Hero() {
   return (
     <section
@@ -53,6 +57,14 @@ export function Hero() {
             <Link
               to="/"
               hash="menu"
+              onClick={(e) => {
+                // Si ya estamos en la home, evitamos que el router "no haga nada"
+                // y forzamos el scroll manualmente.
+                if (window.location.pathname === "/") {
+                  e.preventDefault();
+                  scrollToMenu();
+                }
+              }}
               className="border-[3px] border-ink bg-transparent px-6 py-3 font-mono text-sm font-bold uppercase tracking-widest text-ink shadow-[6px_6px_0_0_var(--color-orange)] transition-transform hover:-translate-x-1 hover:-translate-y-1 active:translate-x-0 active:translate-y-0 md:text-base"
             >
               Ver el menú

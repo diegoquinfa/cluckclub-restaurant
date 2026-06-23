@@ -3,18 +3,39 @@ import { WHATSAPP_URL } from "#/constants/W_URL";
 
 type MainDish = {
   name: string;
+  subtitle?: string;
   ingredients: string[];
   img: string;
   alt: string;
   featured?: boolean;
+  price?: number;
 };
 
-const MAIN_DISHES: MainDish[] = [
+type PricedPortion = { label: string; price: number };
+type PricedItem = { name: string; price?: number };
+
+// Pure helper — kept exported so tests can exercise it directly.
+export function formatPrice(price: number): string {
+  return `${price}k`;
+}
+
+// Reusable price chip. Exported for unit tests; still defined locally
+// and used by the Menu render below.
+export function PriceChip({ price }: { price: number }) {
+  return (
+    <span className="mt-3 inline-block border-[3px] border-ink bg-yellow px-3 py-1 font-mono text-sm font-bold text-ink shadow-[3px_3px_0_0_var(--color-ink)]">
+      {formatPrice(price)}
+    </span>
+  );
+}
+
+export const MAIN_DISHES: MainDish[] = [
   {
-    name: "Perro Caliente",
+    name: "Perros x 2 con papas",
     img: "/cluck-club-perro-caliente-tenders.png",
-    alt: "Perro caliente con tenders, cheddar y tocineta crunch",
+    alt: "Perros x 2 con tenders, cheddar y tocineta crunch",
     featured: true,
+    price: 23,
     ingredients: [
       "Pan mini perro",
       "Tenders pollo (65 gr)",
@@ -27,8 +48,10 @@ const MAIN_DISHES: MainDish[] = [
   },
   {
     name: "Hamburguesa 1",
+    subtitle: "con papas",
     img: "/cluck-club-hamburguesa-pollo.png",
     alt: "Hamburguesa de churrasco de pollo apanado con queso munster",
+    price: 24,
     ingredients: [
       "Churrasco pollo apanado (250 gr)",
       "Salsa Big Cluck",
@@ -40,8 +63,10 @@ const MAIN_DISHES: MainDish[] = [
   },
   {
     name: "Hamburguesa 2",
+    subtitle: "con papas",
     img: "/cluck-club-hamburguesa-pollo.png",
     alt: "Hamburguesa de pollo apanado con doritos y guacamole",
+    price: 26,
     ingredients: [
       "Churrasco pollo apanado (250 gr)",
       "Salsa Queso crema y ajo",
@@ -55,6 +80,7 @@ const MAIN_DISHES: MainDish[] = [
     name: "Burrito",
     img: "/cluck-club-burrito-tenders.png",
     alt: "Burrito relleno de tenders, queso mozzarella y cheddar",
+    price: 25,
     ingredients: [
       "3 tenders (65 gr c/u)",
       "Queso Mozzarella",
@@ -66,14 +92,19 @@ const MAIN_DISHES: MainDish[] = [
   },
 ];
 
-const TENDERS_PORTIONS = ["x4", "x8", "x12", "x16", "x24"];
-const WINGS_PORTIONS = ["x6", "x12", "x24", "x48"];
-const WINGS_FLAVORS = [
-  "Miel picante",
-  "Miel mostaza",
-  "Buffalo",
-  "BBQ Ahumada",
+export const TENDERS_PORTIONS: PricedPortion[] = [
+  { label: "x4", price: 21 },
+  { label: "x8", price: 38 },
+  { label: "x12", price: 55 },
 ];
+
+export const WINGS = {
+  unitPrice: 2500,
+  minimum: 6,
+  promo: "cada 6 alitas = 1 salsa gratis",
+  quantities: [6, 12, 24, 36],
+  flavors: ["Miel picante", "Miel mostaza", "Buffalo", "BBQ Ahumada"],
+} as const;
 
 const FRANCESA_INGREDIENTS = [
   "Salsa Cluck",
@@ -81,21 +112,32 @@ const FRANCESA_INGREDIENTS = [
   "Tocineta",
   "Cebollín fresco",
 ];
-const ADDITIONAL_SIDES = ["Papas Francesas", "Aros cebolla"];
-const ADDITIONAL_SAUCES = [
-  "Guacamole",
-  "Queso crema y ajo",
-  "Big Cluck",
-  "Cluck",
-  "Cheddar",
+
+export const ACCOMPANIMENTS: PricedItem[] = [
+  { name: "Papas con Tenders", price: 19 },
 ];
-const DRINKS = [
-  "Agua",
-  "Coca Cola 250",
-  "Coca Cola Zero 250",
-  "Manzana 250",
-  "Pepsi 250",
-  "Colombiana 250",
+
+export const ADDITIONAL_SIDES: PricedItem[] = [
+  { name: "Papas Francesas" },
+  { name: "Aros cebolla" },
+  { name: "Papas 120g", price: 4 },
+];
+
+export const ADDITIONAL_SAUCES: PricedItem[] = [
+  { name: "Guacamole", price: 3 },
+  { name: "Queso crema y ajo", price: 3 },
+  { name: "Big Cluck", price: 3 },
+  { name: "Cluck", price: 3 },
+  { name: "Cheddar", price: 3 },
+];
+
+export const DRINKS: PricedItem[] = [
+  { name: "Agua", price: 3 },
+  { name: "Coca Cola 250", price: 3 },
+  { name: "Coca Cola Zero 250", price: 3 },
+  { name: "Manzana 250", price: 3 },
+  { name: "Pepsi 250", price: 3 },
+  { name: "Colombiana 250", price: 3 },
 ];
 
 function SectionLabel({ index, title }: { index: string; title: string }) {
@@ -158,6 +200,12 @@ export function Menu() {
                   <h4 className="font-display text-2xl leading-tight text-ink">
                     {dish.name}
                   </h4>
+                  {dish.subtitle && (
+                    <p className="mt-1 font-sans text-sm font-medium uppercase tracking-wide text-ink/70">
+                      {dish.subtitle}
+                    </p>
+                  )}
+                  {dish.price !== undefined && <PriceChip price={dish.price} />}
                   <ul className="mt-3 flex-1 space-y-1">
                     {dish.ingredients.map((ing) => (
                       <li
@@ -203,10 +251,12 @@ export function Menu() {
                 <div className="mt-2 flex flex-wrap gap-2">
                   {TENDERS_PORTIONS.map((p) => (
                     <div
-                      key={p}
+                      key={p.label}
                       className="border-[3px] border-ink bg-yellow px-3 py-1 font-mono text-sm font-bold text-ink shadow-[3px_3px_0_0_var(--color-ink)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
                     >
-                      {p}
+                      {p.price !== undefined
+                        ? `${p.label} · ${formatPrice(p.price)}`
+                        : p.label}
                     </div>
                   ))}
                 </div>
@@ -228,24 +278,39 @@ export function Menu() {
                 <h4 className="font-display text-2xl leading-tight text-ink">
                   Alitas
                 </h4>
-                <span className="mt-3 font-mono text-xs font-bold uppercase tracking-widest text-red">
+
+                <div className="mt-3 flex flex-wrap items-center gap-2">
+                  <span className="border-[3px] border-ink bg-yellow px-3 py-1 font-mono text-sm font-bold text-ink shadow-[3px_3px_0_0_var(--color-ink)]">
+                    {WINGS.unitPrice}/unidad
+                  </span>
+                  <span className="font-mono text-xs font-bold uppercase tracking-widest text-ink/70">
+                    Mínimo {WINGS.minimum}
+                  </span>
+                </div>
+
+                <span className="mt-4 font-mono text-xs font-bold uppercase tracking-widest text-red">
                   Porciones
                 </span>
                 <div className="mt-2 flex flex-wrap gap-2">
-                  {WINGS_PORTIONS.map((p) => (
+                  {WINGS.quantities.map((qty) => (
                     <div
-                      key={p}
+                      key={qty}
                       className="border-[3px] border-ink bg-yellow px-3 py-1 font-mono text-sm font-bold text-ink shadow-[3px_3px_0_0_var(--color-ink)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
                     >
-                      {p}
+                      x{qty} · {formatPrice((qty * WINGS.unitPrice) / 1000)}
                     </div>
                   ))}
                 </div>
+
+                <p className="mt-3 inline-block border-[3px] border-ink bg-red px-3 py-1 font-mono text-xs font-bold uppercase tracking-widest text-bone shadow-[3px_3px_0_0_var(--color-ink)]">
+                  {WINGS.promo}
+                </p>
+
                 <span className="mt-4 font-mono text-xs font-bold uppercase tracking-widest text-red">
                   Sabores
                 </span>
                 <div className="mt-2 flex flex-wrap gap-2">
-                  {WINGS_FLAVORS.map((f) => (
+                  {WINGS.flavors.map((f) => (
                     <span
                       key={f}
                       className="border-[3px] border-ink bg-cream px-3 py-1 font-sans text-sm font-medium text-ink"
@@ -301,10 +366,15 @@ export function Menu() {
                 <div className="mt-3 flex flex-wrap gap-2">
                   {ADDITIONAL_SIDES.map((s) => (
                     <div
-                      key={s}
-                      className="border-[3px] border-ink bg-yellow px-3 py-1 font-sans text-sm font-medium text-ink shadow-[3px_3px_0_0_var(--color-ink)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
+                      key={s.name}
+                      className="inline-flex items-center gap-2 border-[3px] border-ink bg-yellow px-3 py-1 font-sans text-sm font-medium text-ink shadow-[3px_3px_0_0_var(--color-ink)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
                     >
-                      {s}
+                      <span>{s.name}</span>
+                      {s.price !== undefined && (
+                        <span className="font-mono text-xs font-bold">
+                          {formatPrice(s.price)}
+                        </span>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -316,15 +386,50 @@ export function Menu() {
                 <div className="mt-3 flex flex-wrap gap-2">
                   {ADDITIONAL_SAUCES.map((s) => (
                     <span
-                      key={s}
-                      className="border-[3px] border-ink bg-cream px-3 py-1 font-sans text-sm font-medium text-ink"
+                      key={s.name}
+                      className="inline-flex items-center gap-2 border-[3px] border-ink bg-cream px-3 py-1 font-sans text-sm font-medium text-ink"
                     >
-                      {s}
+                      <span>{s.name}</span>
+                      {s.price !== undefined && (
+                        <span className="font-mono text-xs font-bold">
+                          {formatPrice(s.price)}
+                        </span>
+                      )}
                     </span>
                   ))}
                 </div>
               </article>
             </div>
+          </div>
+
+          {/* Papas con Tenders combo — new combo under Acompañamientos */}
+          <div className="mt-8 grid gap-8 md:grid-cols-2">
+            {ACCOMPANIMENTS.map((item) => (
+              <article
+                key={item.name}
+                className="flex flex-col border-[3px] border-ink bg-yellow shadow-[6px_6px_0_0_var(--color-ink)]"
+              >
+                <div className="border-b-[3px] border-ink bg-cream p-4">
+                  <Image
+                    src="/placeholder.svg"
+                    alt={item.name}
+                    width={400}
+                    height={300}
+                    className="mx-auto h-40 w-auto object-contain"
+                  />
+                </div>
+                <div className="flex flex-1 flex-col p-5">
+                  <h4 className="font-display text-2xl leading-tight text-ink">
+                    {item.name}
+                  </h4>
+                  {item.price !== undefined && <PriceChip price={item.price} />}
+                  <p className="mt-3 font-sans text-sm text-ink/80">
+                    Combo de papas y tenders, ideal para compartir o disfrutar
+                    solo.
+                  </p>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
 
@@ -334,10 +439,15 @@ export function Menu() {
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
             {DRINKS.map((drink) => (
               <div
-                key={drink}
-                className="flex items-center justify-center border-[3px] border-ink bg-bone px-3 py-6 text-center font-mono text-sm font-bold uppercase tracking-wide text-ink shadow-[4px_4px_0_0_var(--color-ink)] transition-transform hover:-translate-x-1 hover:-translate-y-1 active:translate-x-0 active:translate-y-0"
+                key={drink.name}
+                className="flex flex-col items-center justify-center gap-1 border-[3px] border-ink bg-bone px-3 py-6 text-center font-mono text-sm font-bold uppercase tracking-wide text-ink shadow-[4px_4px_0_0_var(--color-ink)] transition-transform hover:-translate-x-1 hover:-translate-y-1 active:translate-x-0 active:translate-y-0"
               >
-                {drink}
+                <span>{drink.name}</span>
+                {drink.price !== undefined && (
+                  <span className="border-[2px] border-ink bg-yellow px-2 py-0.5 font-mono text-xs text-ink shadow-[2px_2px_0_0_var(--color-ink)]">
+                    {formatPrice(drink.price)}
+                  </span>
+                )}
               </div>
             ))}
           </div>
