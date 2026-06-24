@@ -31,7 +31,7 @@ export function PriceChip({ price }: { price: number }) {
 
 export const MAIN_DISHES: MainDish[] = [
   {
-    name: "Perros x 2 con papas",
+    name: "DoggiCluck",
     img: "/cluck-club-perro-caliente-tenders.png",
     alt: "Perros x 2 con tenders, cheddar y tocineta crunch",
     featured: true,
@@ -39,22 +39,22 @@ export const MAIN_DISHES: MainDish[] = [
     ingredients: [
       "Pan mini perro",
       "Tenders pollo (65 gr)",
-      "Salsa Cheddar",
-      "Salsa Cluck",
+      "Salsa cheddar cluck",
+      "Salsa cluckiihoney",
       "Tocineta crunch",
       "Cebolla crispy",
       "Cebollín fresco",
     ],
   },
   {
-    name: "Hamburguesa 1",
+    name: "Big Cluck",
     subtitle: "con papas",
     img: "/cluck-club-hamburguesa-pollo.png",
     alt: "Hamburguesa de churrasco de pollo apanado con queso munster",
     price: 24,
     ingredients: [
       "Churrasco pollo apanado (250 gr)",
-      "Salsa Big Cluck",
+      "Salsa Hot club",
       "Lechuga mix",
       "Cebolla crispy",
       "Queso Mounster",
@@ -62,22 +62,22 @@ export const MAIN_DISHES: MainDish[] = [
     ],
   },
   {
-    name: "Hamburguesa 2",
+    name: "Botanita Cluck",
     subtitle: "con papas",
     img: "/cluck-club-hamburguesa-pollo.png",
     alt: "Hamburguesa de pollo apanado con doritos y guacamole",
     price: 26,
     ingredients: [
       "Churrasco pollo apanado (250 gr)",
-      "Salsa Queso crema y ajo",
+      "Salsa La del Club",
       "Salsa guacamole",
-      "Salsa Queso Cheddar",
+      "Salsa cheddar cluck",
       "Doritos",
       "Mix lechuga",
     ],
   },
   {
-    name: "Burrito",
+    name: "Cluckii Wrap",
     img: "/cluck-club-burrito-tenders.png",
     alt: "Burrito relleno de tenders, queso mozzarella y cheddar",
     price: 25,
@@ -87,7 +87,7 @@ export const MAIN_DISHES: MainDish[] = [
       "Queso Cheddar",
       "Tocineta crunch",
       "Mix lechugas",
-      "Salsa Cluck",
+      "Salsa cluckiihoney",
     ],
   },
 ];
@@ -107,8 +107,8 @@ export const WINGS = {
 } as const;
 
 const FRANCESA_INGREDIENTS = [
-  "Salsa Cluck",
-  "Salsa Cheddar",
+  "Salsa cluckiihoney",
+  "Salsa cheddar cluck",
   "Tocineta",
   "Cebollín fresco",
 ];
@@ -124,11 +124,11 @@ export const ADDITIONAL_SIDES: PricedItem[] = [
 ];
 
 export const ADDITIONAL_SAUCES: PricedItem[] = [
-  { name: "Guacamole", price: 3 },
-  { name: "Queso crema y ajo", price: 3 },
-  { name: "Big Cluck", price: 3 },
-  { name: "Cluck", price: 3 },
-  { name: "Cheddar", price: 3 },
+  { name: "GuacaCluck", price: 3 },
+  { name: "La del Club", price: 3 },
+  { name: "Hot club", price: 3 },
+  { name: "cluckiihoney", price: 3 },
+  { name: "cheddar cluck", price: 3 },
 ];
 
 export const DRINKS: PricedItem[] = [
@@ -240,7 +240,7 @@ export function Menu() {
               </div>
               <div className="flex flex-1 flex-col p-5">
                 <h4 className="font-display text-2xl leading-tight text-ink">
-                  Tenders
+                  Crispy tenders
                 </h4>
                 <p className="mt-2 font-sans text-sm text-ink/80">
                   Tenders de pollo 65 gr c/u, empanizados a mano.
@@ -276,7 +276,7 @@ export function Menu() {
               </div>
               <div className="flex flex-1 flex-col p-5">
                 <h4 className="font-display text-2xl leading-tight text-ink">
-                  Alitas
+                  Cluck wings
                 </h4>
 
                 <div className="mt-3 flex flex-wrap items-center gap-2">
@@ -341,7 +341,7 @@ export function Menu() {
               </div>
               <div className="flex flex-1 flex-col p-5">
                 <h4 className="font-display text-2xl leading-tight text-ink">
-                  La Francesa
+                  Cluck Fries
                 </h4>
                 <ul className="mt-3 flex-1 space-y-1">
                   {FRANCESA_INGREDIENTS.map((ing) => (
