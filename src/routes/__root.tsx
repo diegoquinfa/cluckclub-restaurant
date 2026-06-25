@@ -89,6 +89,13 @@ export const Route = createRootRoute({
         crossOrigin: "anonymous",
       },
     ],
+    scripts: [
+      {
+        src: "https://analytics.ahrefs.com/analytics.js",
+        async: true,
+        "data-key": "owM7XDPnaHLmqr7xq14nyg",
+      },
+    ],
   }),
   notFoundComponent: NotFound,
   shellComponent: RootDocument,
