@@ -1,7 +1,10 @@
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import { useState } from "react";
 
+import { CartDrawer } from "#/components/cart/cart-drawer";
+import { CartFab } from "#/components/cart/cart-fab";
 import { NotFound } from "#/components/not-found";
 import appCss from "../styles.css?url";
 
@@ -92,6 +95,7 @@ export const Route = createRootRoute({
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  const [cartOpen, setCartOpen] = useState(false);
   return (
     <html lang="es-CO">
       <head>
@@ -124,6 +128,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         {children}
+        <CartFab onOpen={() => setCartOpen(true)} />
+        <CartDrawer open={cartOpen} onOpenChange={setCartOpen} />
         <TanStackDevtools
           config={{
             position: "bottom-right",
