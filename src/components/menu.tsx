@@ -1,5 +1,7 @@
 import { Image } from "@unpic/react";
 import { ShoppingBag } from "lucide-react";
+import { useState } from "react";
+import { WingsModal } from "#/components/menu/wings-modal";
 import { WHATSAPP_URL } from "#/constants/W_URL";
 import { useCart } from "#/stores/cart";
 
@@ -179,6 +181,8 @@ function SectionLabel({ index, title }: { index: string; title: string }) {
 }
 
 export function Menu() {
+  const [wingsModalOpen, setWingsModalOpen] = useState(false);
+
   return (
     <section id="menu" className="bg-cream px-4 py-16 md:px-6 md:py-24">
       <div className="mx-auto max-w-6xl">
@@ -365,46 +369,18 @@ export function Menu() {
                   {WINGS.promo}
                 </p>
 
-                <span className="mt-4 font-mono text-xs font-bold uppercase tracking-widest text-red">
-                  Elige sabor y agrega
-                </span>
-                <div className="mt-2 flex flex-col gap-3">
-                  {WINGS.quantities.map((qty) => (
-                    <div key={qty} className="flex flex-col gap-2">
-                      <span className="font-mono text-xs font-bold uppercase tracking-widest text-ink/70">
-                        x{qty}
-                      </span>
-                      <div className="flex flex-wrap gap-2">
-                        {WINGS.flavors.map((flavor) => (
-                          <button
-                            key={flavor}
-                            type="button"
-                            onClick={() =>
-                              useCart.getState().addItem({
-                                kind: "wings",
-                                id: `${qty}-${flavor}`,
-                                qty,
-                                flavor,
-                                unitPrice: WINGS.unitPrice,
-                              })
-                            }
-                            aria-label={`Agregar ${qty} alitas ${flavor}`}
-                            className="inline-flex items-center gap-2 border-[3px] border-ink bg-cream px-3 py-1 font-sans text-sm font-medium text-ink shadow-[2px_2px_0_0_var(--color-ink)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0"
-                          >
-                            <span>{flavor}</span>
-                            <span className="inline-flex items-center justify-center gap-1 border-[2px] border-ink bg-red px-1.5 py-0.5 font-mono text-[0.65rem] font-bold uppercase tracking-widest text-bone">
-                              <ShoppingBag
-                                aria-hidden="true"
-                                className="size-3"
-                              />
-                              Agregar
-                            </span>
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <p className="mt-4 font-sans text-sm text-ink/80">
+                  Glaseadas a mano. Elegí porción y los sabores en el modal.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setWingsModalOpen(true)}
+                  aria-label="Personalizar y agregar alitas"
+                  className="mt-4 inline-flex items-center justify-center gap-2 border-[3px] border-ink bg-red px-6 py-3 font-mono text-sm font-bold uppercase tracking-widest text-bone shadow-[4px_4px_0_0_var(--color-ink)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0"
+                >
+                  <ShoppingBag aria-hidden="true" className="size-4" />
+                  Personalizar y agregar
+                </button>
               </div>
             </article>
           </div>
@@ -606,6 +582,8 @@ export function Menu() {
           </a>
         </div>
       </div>
+
+      <WingsModal open={wingsModalOpen} onOpenChange={setWingsModalOpen} />
     </section>
   );
 }
