@@ -196,6 +196,45 @@ describe("useCart - persistence", () => {
       Storage.prototype.removeItem = originalRemoveItem;
     }
   });
+
+  it("persists observation alongside lines (not hydrated) at version 1", async () => {
+    const { result } = renderHook(() => useCart());
+    act(() => {
+      result.current.setObservation("retirar 21hs");
+    });
+    // Wait for the debounced persist write.
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    const raw = localStorage.getItem("cluck-cart");
+    expect(raw).not.toBeNull();
+    const parsed = JSON.parse(raw as string) as {
+      state: Record<string, unknown>;
+      version: number;
+    };
+    expect(parsed.version).toBe(1);
+    expect(parsed.state).toHaveProperty("lines");
+    expect(parsed.state).toHaveProperty("observation", "retirar 21hs");
+    expect(parsed.state).not.toHaveProperty("hydrated");
+  });
+
+  it("hydrates a v1 cart blob (no observation key) with observation = '' and lines preserved", async () => {
+    // Inject a legacy v1 cart: only lines, no observation field, version 1.
+    localStorage.setItem(
+      "cluck-cart",
+      JSON.stringify({
+        state: { lines: [MAIN_LINE, SAUCE_LINE] },
+        version: 1,
+      }),
+    );
+
+    // Force a re-read from storage and wait for the hydration promise.
+    await act(async () => {
+      await useCart.persist.rehydrate();
+    });
+
+    const state = useCart.getState();
+    expect(state.lines).toEqual([MAIN_LINE, SAUCE_LINE]);
+    expect(state.observation).toBe("");
+  });
 });
 
 describe("useCart - observation", () => {

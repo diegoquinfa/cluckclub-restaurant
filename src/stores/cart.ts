@@ -122,7 +122,10 @@ export const useCart = create<CartState>()(
       name: STORAGE_KEY,
       version: STORAGE_VERSION,
       storage: createJSONStorage(() => safeStorage),
-      partialize: (state) => ({ lines: state.lines }),
+      partialize: (state) => ({
+        lines: state.lines,
+        observation: state.observation,
+      }),
       onRehydrateStorage: () => (state) => {
         state?.setHydrated(true);
       },
