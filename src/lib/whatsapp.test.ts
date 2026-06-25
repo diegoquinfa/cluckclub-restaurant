@@ -84,6 +84,46 @@ describe("buildWhatsappMessage", () => {
         "Total: $21k",
     );
   });
+
+  it("omits the observation section when observation is an empty string", () => {
+    const message = buildWhatsappMessage([mainLine], "");
+    expect(message).toBe(
+      "Hola Cluck Club, quiero pedir:\n\n" +
+        "\u2022 1 Big Cluck\n\n" +
+        "Total: $24k",
+    );
+    expect(message).not.toContain("Observación");
+  });
+
+  it("omits the observation section when observation is whitespace-only", () => {
+    const message = buildWhatsappMessage([mainLine], "   ");
+    expect(message).not.toContain("Observación");
+  });
+
+  it("omits the observation section when observation is omitted entirely", () => {
+    const message = buildWhatsappMessage([mainLine]);
+    expect(message).not.toContain("Observación");
+  });
+
+  it("inserts the trimmed observation block between bullets and total", () => {
+    const message = buildWhatsappMessage([mainLine], "retirar 21hs");
+    expect(message).toBe(
+      "Hola Cluck Club, quiero pedir:\n\n" +
+        "\u2022 1 Big Cluck\n\n" +
+        "Observación: retirar 21hs\n\n" +
+        "Total: $24k",
+    );
+  });
+
+  it("trims leading and trailing whitespace from the observation", () => {
+    const message = buildWhatsappMessage([mainLine], "  sin picante  ");
+    expect(message).toContain("Observación: sin picante");
+  });
+
+  it("preserves newlines inside the observation", () => {
+    const message = buildWhatsappMessage([mainLine], "line1\nline2");
+    expect(message).toContain("Observación: line1\nline2");
+  });
 });
 
 describe("buildWhatsappUrl", () => {
@@ -113,6 +153,14 @@ describe("buildWhatsappUrl", () => {
     // No raw spaces inside the text parameter portion of the URL.
     const textSegment = url.split("?text=")[1] ?? "";
     expect(textSegment).not.toMatch(/ /);
+  });
+
+  it("URL-encodes newlines in the observation as %0A", () => {
+    const url = buildWhatsappUrl([mainLine], "a\nb") as string;
+    expect(url).toContain("%0A");
+    const parsed = new URL(url);
+    const text = parsed.searchParams.get("text") ?? "";
+    expect(text).toContain("Observación: a\nb");
   });
 
   it("buildWingsId is order-independent (sorts sabores before joining)", () => {

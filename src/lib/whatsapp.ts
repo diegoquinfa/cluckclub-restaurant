@@ -64,17 +64,27 @@ function formatBullet(line: CartLine): string {
   return `\u2022 ${line.qty} ${line.name}`;
 }
 
-export function buildWhatsappMessage(lines: CartLine[]): string | null {
+export function buildWhatsappMessage(
+  lines: CartLine[],
+  observation?: string,
+): string | null {
   if (lines.length === 0) {
     return null;
   }
   const bullets = lines.map(formatBullet).join("\n");
   const totalK = lines.reduce((sum, line) => sum + lineSubtotalK(line), 0);
-  return `Hola Cluck Club, quiero pedir:\n\n${bullets}\n\nTotal: $${totalK}k`;
+  const trimmedObservation = observation?.trim() ?? "";
+  const observationBlock = trimmedObservation
+    ? `\n\nObservación: ${trimmedObservation}\n\n`
+    : "\n\n";
+  return `Hola Cluck Club, quiero pedir:\n\n${bullets}${observationBlock}Total: $${totalK}k`;
 }
 
-export function buildWhatsappUrl(lines: CartLine[]): string | null {
-  const message = buildWhatsappMessage(lines);
+export function buildWhatsappUrl(
+  lines: CartLine[],
+  observation?: string,
+): string | null {
+  const message = buildWhatsappMessage(lines, observation);
   if (message === null) {
     return null;
   }
