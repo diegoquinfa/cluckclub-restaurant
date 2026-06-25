@@ -7,15 +7,19 @@ export type { CartLine };
 interface CartState {
   lines: CartLine[];
   hydrated: boolean;
+  observation: string;
   addItem: (line: CartLine) => void;
   inc: (id: string) => void;
   dec: (id: string) => void;
   remove: (id: string) => void;
   clear: () => void;
   setHydrated: (value: boolean) => void;
+  setObservation: (value: string) => void;
   total: () => number;
   count: () => number;
 }
+
+const OBSERVATION_MAX_LENGTH = 500;
 
 const STORAGE_KEY = "cluck-cart";
 const STORAGE_VERSION = 1;
@@ -56,6 +60,7 @@ export const useCart = create<CartState>()(
     (set, get) => ({
       lines: [],
       hydrated: false,
+      observation: "",
 
       addItem: (incoming) => {
         const lines = get().lines;
@@ -102,6 +107,10 @@ export const useCart = create<CartState>()(
 
       setHydrated: (value) => {
         set({ hydrated: value });
+      },
+
+      setObservation: (value) => {
+        set({ observation: value.slice(0, OBSERVATION_MAX_LENGTH) });
       },
 
       total: () =>

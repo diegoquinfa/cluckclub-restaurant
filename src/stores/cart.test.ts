@@ -186,3 +186,46 @@ describe("useCart - persistence", () => {
     }
   });
 });
+
+describe("useCart - observation", () => {
+  it("defaults observation to an empty string", () => {
+    const { result } = renderHook(() => useCart());
+    expect(result.current.observation).toBe("");
+  });
+
+  it("setObservation updates the note", () => {
+    const { result } = renderHook(() => useCart());
+    act(() => {
+      result.current.setObservation("sin picante");
+    });
+    expect(result.current.observation).toBe("sin picante");
+  });
+
+  it("setObservation clamps input longer than 500 characters to length 500", () => {
+    const { result } = renderHook(() => useCart());
+    act(() => {
+      result.current.setObservation("x".repeat(600));
+    });
+    expect(result.current.observation).toHaveLength(500);
+  });
+
+  it("setObservation accepts exactly 500 characters without truncating", () => {
+    const { result } = renderHook(() => useCart());
+    act(() => {
+      result.current.setObservation("x".repeat(500));
+    });
+    expect(result.current.observation).toHaveLength(500);
+  });
+
+  it("setObservation does not affect cart lines or hydrated state", () => {
+    const { result } = renderHook(() => useCart());
+    act(() => {
+      result.current.addItem(MAIN_LINE);
+      result.current.setHydrated(true);
+      result.current.setObservation("retirar 21hs");
+    });
+    expect(result.current.lines).toEqual([MAIN_LINE]);
+    expect(result.current.hydrated).toBe(true);
+    expect(result.current.observation).toBe("retirar 21hs");
+  });
+});
