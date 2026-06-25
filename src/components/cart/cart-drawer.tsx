@@ -7,6 +7,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "#/components/ui/sheet";
+import { Textarea } from "#/components/ui/textarea";
 import { buildWhatsappUrl } from "#/lib/whatsapp";
 import { useCart } from "#/stores/cart";
 
@@ -18,6 +19,8 @@ type CartDrawerProps = {
 export function CartDrawer({ open, onOpenChange }: CartDrawerProps) {
   const lines = useCart((state) => state.lines);
   const total = useCart((state) => state.total());
+  const observation = useCart((state) => state.observation);
+  const setObservation = useCart((state) => state.setObservation);
   const inc = useCart((state) => state.inc);
   const dec = useCart((state) => state.dec);
   const remove = useCart((state) => state.remove);
@@ -26,7 +29,7 @@ export function CartDrawer({ open, onOpenChange }: CartDrawerProps) {
   const isEmpty = lines.length === 0;
 
   const handleSend = () => {
-    const url = buildWhatsappUrl(lines);
+    const url = buildWhatsappUrl(lines, observation);
     if (!url) {
       return;
     }
@@ -84,6 +87,23 @@ export function CartDrawer({ open, onOpenChange }: CartDrawerProps) {
             <span className="border-[3px] border-ink bg-yellow px-3 py-1 font-display text-2xl text-ink shadow-[2px_2px_0_0_var(--color-ink)]">
               ${total}k
             </span>
+          </div>
+          <div className="mb-4 flex flex-col gap-2">
+            <label
+              htmlFor="cart-observation"
+              className="font-mono text-xs font-bold uppercase tracking-widest text-ink/70"
+            >
+              OBSERVACIÓN
+            </label>
+            <Textarea
+              id="cart-observation"
+              value={observation}
+              onChange={(e) => setObservation(e.target.value)}
+              maxLength={500}
+              placeholder="Ej: sin picante, retirar a las 21hs"
+              aria-label="Observación para el pedido"
+              className="min-h-[80px] w-full border-[3px] border-ink bg-cream p-3 font-sans text-sm text-ink shadow-[2px_2px_0_0_var(--color-ink)] placeholder:text-ink/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red resize-none"
+            />
           </div>
           <button
             type="button"

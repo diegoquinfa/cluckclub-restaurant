@@ -104,4 +104,74 @@ describe("CartDrawer", () => {
     expect(useCart.getState().lines).toHaveLength(0);
     expect(onOpenChange).toHaveBeenCalledWith(false);
   });
+
+  it("renders an observation textarea in the footer with the OBSERVACIÓN label", () => {
+    useCart.setState({ hydrated: true, lines: [MAIN_LINE] });
+    render(<CartDrawer open onOpenChange={() => {}} />);
+    expect(screen.getByText("OBSERVACIÓN")).toBeTruthy();
+    const textarea = screen.getByLabelText(/observación para el pedido/i);
+    expect(textarea.tagName).toBe("TEXTAREA");
+    expect(textarea.getAttribute("placeholder")).toBe(
+      "Ej: sin picante, retirar a las 21hs",
+    );
+    expect(textarea.getAttribute("maxlength")).toBe("500");
+  });
+
+  it("typing into the observation textarea updates the store", () => {
+    useCart.setState({ hydrated: true, lines: [MAIN_LINE] });
+    render(<CartDrawer open onOpenChange={() => {}} />);
+    const textarea = screen.getByLabelText(
+      /observación para el pedido/i,
+    ) as HTMLTextAreaElement;
+    fireEvent.change(textarea, { target: { value: "sin picante" } });
+    expect(useCart.getState().observation).toBe("sin picante");
+  });
+
+  it("observation is controlled by the store value on render", () => {
+    useCart.setState({
+      hydrated: true,
+      lines: [MAIN_LINE],
+      observation: "retirar 21hs",
+    });
+    render(<CartDrawer open onOpenChange={() => {}} />);
+    const textarea = screen.getByLabelText(
+      /observación para el pedido/i,
+    ) as HTMLTextAreaElement;
+    expect(textarea.value).toBe("retirar 21hs");
+  });
+
+  it("send includes the observation in the WhatsApp URL and clears it from the store", () => {
+    useCart.setState({
+      hydrated: true,
+      lines: [MAIN_LINE],
+      observation: "sin picante",
+    });
+    render(<CartDrawer open onOpenChange={() => {}} />);
+    fireEvent.click(
+      screen.getByRole("button", { name: /pedir por whatsapp/i }),
+    );
+    const url = openSpy.mock.calls[0]?.[0] as string;
+    expect(url).toContain(encodeURIComponent("Observación: sin picante"));
+    expect(useCart.getState().observation).toBe("");
+  });
+
+  it("the observation value survives closing and reopening the drawer", () => {
+    const onOpenChange = vi.fn();
+    useCart.setState({ hydrated: true, lines: [MAIN_LINE] });
+    const { rerender } = render(
+      <CartDrawer open onOpenChange={onOpenChange} />,
+    );
+    fireEvent.change(
+      screen.getByLabelText(/observación para el pedido/i),
+      { target: { value: "sin picante" } },
+    );
+    expect(useCart.getState().observation).toBe("sin picante");
+    // Simulate the parent closing then reopening the drawer.
+    rerender(<CartDrawer open={false} onOpenChange={onOpenChange} />);
+    rerender(<CartDrawer open onOpenChange={onOpenChange} />);
+    const textarea = screen.getByLabelText(
+      /observación para el pedido/i,
+    ) as HTMLTextAreaElement;
+    expect(textarea.value).toBe("sin picante");
+  });
 });
