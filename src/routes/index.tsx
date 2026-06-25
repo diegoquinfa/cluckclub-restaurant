@@ -8,7 +8,11 @@ import StickerWall from "#/components/sticker-wall";
 import { Zones } from "#/components/zones";
 
 const SITE_ORIGIN = "https://cluckclub.co";
-const OG_IMAGE = `${SITE_ORIGIN}/cluck-club-caja-tenders.png`;
+const OG_IMAGE = `${SITE_ORIGIN}/og_web_cluckclub.webp`;
+const OG_IMAGE_WIDTH = 1200;
+const OG_IMAGE_HEIGHT = 630;
+const OG_IMAGE_ALT =
+  "Caja de tenders crujientes recién fritos de Cluck Club, cocina oculta en Cartagena";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -31,6 +35,10 @@ export const Route = createFileRoute("/")({
         content: SITE_ORIGIN,
       },
       {
+        property: "og:site_name",
+        content: "Cluck Club",
+      },
+      {
         property: "og:title",
         content: "Cluck Club | Tenders y alitas crujientes en Cartagena",
       },
@@ -42,6 +50,26 @@ export const Route = createFileRoute("/")({
       {
         property: "og:image",
         content: OG_IMAGE,
+      },
+      {
+        property: "og:image:secure_url",
+        content: OG_IMAGE,
+      },
+      {
+        property: "og:image:type",
+        content: "image/webp",
+      },
+      {
+        property: "og:image:width",
+        content: String(OG_IMAGE_WIDTH),
+      },
+      {
+        property: "og:image:height",
+        content: String(OG_IMAGE_HEIGHT),
+      },
+      {
+        property: "og:image:alt",
+        content: OG_IMAGE_ALT,
       },
       {
         property: "og:locale",
@@ -85,7 +113,7 @@ const JSON_LD = {
       name: "Cluck Club",
       url: SITE_ORIGIN,
       logo: `${SITE_ORIGIN}/cluck-club-caja-tenders.png`,
-      image: `${SITE_ORIGIN}/cluck-club-caja-tenders.png`,
+      image: `${SITE_ORIGIN}/og_web_cluckclub.webp`,
       telephone: "+57-302-6688105",
       priceRange: "$$",
       servesCuisine: ["Pollo frito", "Comida rápida artesanal", "Americana"],
