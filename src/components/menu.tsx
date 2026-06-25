@@ -366,16 +366,43 @@ export function Menu() {
                 </p>
 
                 <span className="mt-4 font-mono text-xs font-bold uppercase tracking-widest text-red">
-                  Sabores
+                  Elige sabor y agrega
                 </span>
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {WINGS.flavors.map((f) => (
-                    <span
-                      key={f}
-                      className="border-[3px] border-ink bg-cream px-3 py-1 font-sans text-sm font-medium text-ink"
-                    >
-                      {f}
-                    </span>
+                <div className="mt-2 flex flex-col gap-3">
+                  {WINGS.quantities.map((qty) => (
+                    <div key={qty} className="flex flex-col gap-2">
+                      <span className="font-mono text-xs font-bold uppercase tracking-widest text-ink/70">
+                        x{qty}
+                      </span>
+                      <div className="flex flex-wrap gap-2">
+                        {WINGS.flavors.map((flavor) => (
+                          <button
+                            key={flavor}
+                            type="button"
+                            onClick={() =>
+                              useCart.getState().addItem({
+                                kind: "wings",
+                                id: `${qty}-${flavor}`,
+                                qty,
+                                flavor,
+                                unitPrice: WINGS.unitPrice,
+                              })
+                            }
+                            aria-label={`Agregar ${qty} alitas ${flavor}`}
+                            className="inline-flex items-center gap-2 border-[3px] border-ink bg-cream px-3 py-1 font-sans text-sm font-medium text-ink shadow-[2px_2px_0_0_var(--color-ink)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0"
+                          >
+                            <span>{flavor}</span>
+                            <span className="inline-flex items-center justify-center gap-1 border-[2px] border-ink bg-red px-1.5 py-0.5 font-mono text-[0.65rem] font-bold uppercase tracking-widest text-bone">
+                              <ShoppingBag
+                                aria-hidden="true"
+                                className="size-3"
+                              />
+                              Agregar
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
                   ))}
                 </div>
               </div>
