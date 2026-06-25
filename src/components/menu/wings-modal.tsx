@@ -16,6 +16,7 @@ const FLAVORS = [
   "Miel mostaza",
   "Buffalo",
   "BBQ Ahumada",
+  "Ajo parmesano",
 ] as const;
 const UNIT_PRICE = 2500;
 const DEFAULT_FLAVOR = FLAVORS[0];

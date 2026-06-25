@@ -132,7 +132,13 @@ export const WINGS = {
   minimum: 6,
   promo: "cada 6 alitas = 1 salsa gratis",
   quantities: [6, 12, 24, 36],
-  flavors: ["Miel picante", "Miel mostaza", "Buffalo", "BBQ Ahumada"],
+  flavors: [
+    "Miel picante",
+    "Miel mostaza",
+    "Buffalo",
+    "BBQ Ahumada",
+    "Ajo parmesano",
+  ],
 } as const;
 
 const FRANCESA_INGREDIENTS = [
