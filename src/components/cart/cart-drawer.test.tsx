@@ -161,10 +161,9 @@ describe("CartDrawer", () => {
     const { rerender } = render(
       <CartDrawer open onOpenChange={onOpenChange} />,
     );
-    fireEvent.change(
-      screen.getByLabelText(/observación para el pedido/i),
-      { target: { value: "sin picante" } },
-    );
+    fireEvent.change(screen.getByLabelText(/observación para el pedido/i), {
+      target: { value: "sin picante" },
+    });
     expect(useCart.getState().observation).toBe("sin picante");
     // Simulate the parent closing then reopening the drawer.
     rerender(<CartDrawer open={false} onOpenChange={onOpenChange} />);

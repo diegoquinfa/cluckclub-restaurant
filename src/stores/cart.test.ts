@@ -267,6 +267,17 @@ describe("useCart - observation", () => {
     expect(result.current.observation).toHaveLength(500);
   });
 
+  it("setObservation silently truncates a 600-char paste to length 500 with no error", () => {
+    const { result } = renderHook(() => useCart());
+    expect(() => {
+      act(() => {
+        result.current.setObservation("y".repeat(600));
+      });
+    }).not.toThrow();
+    expect(result.current.observation).toHaveLength(500);
+    expect(result.current.observation).toBe("y".repeat(500));
+  });
+
   it("setObservation does not affect cart lines or hydrated state", () => {
     const { result } = renderHook(() => useCart());
     act(() => {
