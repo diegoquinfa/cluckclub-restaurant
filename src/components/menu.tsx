@@ -31,6 +31,31 @@ export function PriceChip({ price }: { price: number }) {
   );
 }
 
+function AgregarButton({
+  onClick,
+  ariaLabel,
+  className,
+}: {
+  onClick: () => void;
+  ariaLabel: string;
+  className?: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={ariaLabel}
+      className={
+        className ??
+        "inline-flex items-center justify-center gap-1 border-[3px] border-ink bg-red px-2.5 py-1 font-mono text-[0.7rem] font-bold uppercase tracking-widest text-bone shadow-[2px_2px_0_0_var(--color-ink)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0"
+      }
+    >
+      <ShoppingBag aria-hidden="true" className="size-3" />
+      Agregar
+    </button>
+  );
+}
+
 export const MAIN_DISHES: MainDish[] = [
   {
     name: "DoggiCluck",
@@ -269,16 +294,30 @@ export function Menu() {
                   Porciones
                 </span>
                 <div className="mt-2 flex flex-wrap gap-2">
-                  {TENDERS_PORTIONS.map((p) => (
-                    <div
-                      key={p.label}
-                      className="border-[3px] border-ink bg-yellow px-3 py-1 font-mono text-sm font-bold text-ink shadow-[3px_3px_0_0_var(--color-ink)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
-                    >
-                      {p.price !== undefined
-                        ? `${p.label} · ${formatPrice(p.price)}`
-                        : p.label}
-                    </div>
-                  ))}
+                  {TENDERS_PORTIONS.map((p) =>
+                    p.price !== undefined ? (
+                      <div
+                        key={p.label}
+                        className="flex items-center gap-2 border-[3px] border-ink bg-yellow px-3 py-1 font-mono text-sm font-bold text-ink shadow-[3px_3px_0_0_var(--color-ink)]"
+                      >
+                        <span>
+                          Tenders {p.label} · {formatPrice(p.price)}
+                        </span>
+                        <AgregarButton
+                          ariaLabel={`Agregar Tenders ${p.label}`}
+                          onClick={() =>
+                            useCart.getState().addItem({
+                              kind: "tenders",
+                              id: p.label,
+                              label: p.label,
+                              price: p.price as number,
+                              qty: 1,
+                            })
+                          }
+                        />
+                      </div>
+                    ) : null,
+                  )}
                 </div>
               </div>
             </article>
@@ -384,19 +423,33 @@ export function Menu() {
                   Chips de papa
                 </h4>
                 <div className="mt-3 flex flex-wrap gap-2">
-                  {ADDITIONAL_SIDES.map((s) => (
-                    <div
-                      key={s.name}
-                      className="inline-flex items-center gap-2 border-[3px] border-ink bg-yellow px-3 py-1 font-sans text-sm font-medium text-ink shadow-[3px_3px_0_0_var(--color-ink)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
-                    >
-                      <span>{s.name}</span>
-                      {s.price !== undefined && (
-                        <span className="font-mono text-xs font-bold">
-                          {formatPrice(s.price)}
+                  {ADDITIONAL_SIDES.map((s) =>
+                    s.price !== undefined ? (
+                      <div
+                        key={s.name}
+                        className="inline-flex items-center gap-2 border-[3px] border-ink bg-yellow px-3 py-1 font-sans text-sm font-medium text-ink shadow-[3px_3px_0_0_var(--color-ink)]"
+                      >
+                        <span>
+                          {s.name} ·{" "}
+                          <span className="font-mono text-xs font-bold">
+                            {formatPrice(s.price)}
+                          </span>
                         </span>
-                      )}
-                    </div>
-                  ))}
+                        <AgregarButton
+                          ariaLabel={`Agregar ${s.name}`}
+                          onClick={() =>
+                            useCart.getState().addItem({
+                              kind: "combo",
+                              id: s.name,
+                              name: s.name,
+                              price: s.price as number,
+                              qty: 1,
+                            })
+                          }
+                        />
+                      </div>
+                    ) : null,
+                  )}
                 </div>
               </article>
               <article className="border-[3px] border-ink bg-bone p-5 shadow-[6px_6px_0_0_var(--color-ink)]">
@@ -404,19 +457,33 @@ export function Menu() {
                   Salsas extra
                 </h4>
                 <div className="mt-3 flex flex-wrap gap-2">
-                  {ADDITIONAL_SAUCES.map((s) => (
-                    <span
-                      key={s.name}
-                      className="inline-flex items-center gap-2 border-[3px] border-ink bg-cream px-3 py-1 font-sans text-sm font-medium text-ink"
-                    >
-                      <span>{s.name}</span>
-                      {s.price !== undefined && (
-                        <span className="font-mono text-xs font-bold">
-                          {formatPrice(s.price)}
+                  {ADDITIONAL_SAUCES.map((s) =>
+                    s.price !== undefined ? (
+                      <span
+                        key={s.name}
+                        className="inline-flex items-center gap-2 border-[3px] border-ink bg-cream px-3 py-1 font-sans text-sm font-medium text-ink"
+                      >
+                        <span>
+                          {s.name} ·{" "}
+                          <span className="font-mono text-xs font-bold">
+                            {formatPrice(s.price)}
+                          </span>
                         </span>
-                      )}
-                    </span>
-                  ))}
+                        <AgregarButton
+                          ariaLabel={`Agregar ${s.name}`}
+                          onClick={() =>
+                            useCart.getState().addItem({
+                              kind: "sauce",
+                              id: s.name,
+                              name: s.name,
+                              price: s.price as number,
+                              qty: 1,
+                            })
+                          }
+                        />
+                      </span>
+                    ) : null,
+                  )}
                 </div>
               </article>
             </div>
@@ -443,6 +510,21 @@ export function Menu() {
                     {item.name}
                   </h4>
                   {item.price !== undefined && <PriceChip price={item.price} />}
+                  {item.price !== undefined && (
+                    <AgregarButton
+                      className="mt-3 inline-flex w-fit items-center justify-center gap-2 border-[3px] border-ink bg-red px-4 py-2 font-mono text-xs font-bold uppercase tracking-widest text-bone shadow-[3px_3px_0_0_var(--color-ink)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0"
+                      ariaLabel={`Agregar ${item.name}`}
+                      onClick={() =>
+                        useCart.getState().addItem({
+                          kind: "combo",
+                          id: item.name,
+                          name: item.name,
+                          price: item.price as number,
+                          qty: 1,
+                        })
+                      }
+                    />
+                  )}
                   <p className="mt-3 font-sans text-sm text-ink/80">
                     Combo de papas y tenders, ideal para compartir o disfrutar
                     solo.
@@ -457,19 +539,31 @@ export function Menu() {
         <div>
           <SectionLabel index="04" title="Bebidas" />
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-            {DRINKS.map((drink) => (
-              <div
-                key={drink.name}
-                className="flex flex-col items-center justify-center gap-1 border-[3px] border-ink bg-bone px-3 py-6 text-center font-mono text-sm font-bold uppercase tracking-wide text-ink shadow-[4px_4px_0_0_var(--color-ink)] transition-transform hover:-translate-x-1 hover:-translate-y-1 active:translate-x-0 active:translate-y-0"
-              >
-                <span>{drink.name}</span>
-                {drink.price !== undefined && (
+            {DRINKS.map((drink) =>
+              drink.price !== undefined ? (
+                <div
+                  key={drink.name}
+                  className="flex flex-col items-center justify-center gap-2 border-[3px] border-ink bg-bone px-3 py-6 text-center font-mono text-sm font-bold uppercase tracking-wide text-ink shadow-[4px_4px_0_0_var(--color-ink)] transition-transform hover:-translate-x-1 hover:-translate-y-1 active:translate-x-0 active:translate-y-0"
+                >
+                  <span>{drink.name}</span>
                   <span className="border-[2px] border-ink bg-yellow px-2 py-0.5 font-mono text-xs text-ink shadow-[2px_2px_0_0_var(--color-ink)]">
                     {formatPrice(drink.price)}
                   </span>
-                )}
-              </div>
-            ))}
+                  <AgregarButton
+                    ariaLabel={`Agregar ${drink.name}`}
+                    onClick={() =>
+                      useCart.getState().addItem({
+                        kind: "drink",
+                        id: drink.name,
+                        name: drink.name,
+                        price: drink.price as number,
+                        qty: 1,
+                      })
+                    }
+                  />
+                </div>
+              ) : null,
+            )}
           </div>
         </div>
 
