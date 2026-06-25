@@ -1,0 +1,99 @@
+import { describe, expect, it } from "vitest";
+import { WHATSAPP_URL } from "#/constants/W_URL";
+import {
+  buildWhatsappMessage,
+  buildWhatsappUrl,
+  type CartLine,
+} from "#/lib/whatsapp";
+
+const mainLine: CartLine = {
+  kind: "main",
+  id: "Big Cluck",
+  name: "Big Cluck",
+  price: 24,
+  qty: 1,
+};
+
+const tendersLine: CartLine = {
+  kind: "tenders",
+  id: "x4",
+  label: "x4",
+  price: 21,
+  qty: 1,
+};
+
+const wingsLine: CartLine = {
+  kind: "wings",
+  id: "12-BBQ Ahumada",
+  qty: 12,
+  flavor: "BBQ Ahumada",
+  unitPrice: 2500,
+};
+
+const PHONE_FROM_URL = (() => {
+  const match = WHATSAPP_URL.match(/wa\.me\/(\d+)/);
+  return match ? match[1] : "";
+})();
+
+describe("buildWhatsappMessage", () => {
+  it("returns null for an empty cart", () => {
+    expect(buildWhatsappMessage([])).toBeNull();
+  });
+
+  it("renders header, bullets and total for a main dish", () => {
+    const message = buildWhatsappMessage([mainLine]);
+    expect(message).toBe(
+      "Hola Cluck Club, quiero pedir:\n\n" +
+        "\u2022 1 Big Cluck\n\n" +
+        "Total: $24k",
+    );
+  });
+
+  it("uses Spanish-first phrasing for wings (alitas)", () => {
+    const message = buildWhatsappMessage([wingsLine]);
+    expect(message).toBe(
+      "Hola Cluck Club, quiero pedir:\n\n" +
+        "\u2022 12 alitas BBQ Ahumada\n\n" +
+        `Total: $${(12 * 2500) / 1000}k`,
+    );
+  });
+
+  it("uses the label for tenders lines", () => {
+    const message = buildWhatsappMessage([tendersLine]);
+    expect(message).toBe(
+      "Hola Cluck Club, quiero pedir:\n\n" +
+        "\u2022 1 Tenders x4\n\n" +
+        "Total: $21k",
+    );
+  });
+});
+
+describe("buildWhatsappUrl", () => {
+  it("returns null for an empty cart", () => {
+    expect(buildWhatsappUrl([])).toBeNull();
+  });
+
+  it("reads the phone number from WHATSAPP_URL and encodes the message", () => {
+    const url = buildWhatsappUrl([mainLine]);
+    expect(url).not.toBeNull();
+    expect(url).toMatch(/^https:\/\/wa\.me\//);
+    expect(url).toContain(PHONE_FROM_URL);
+
+    const parsed = new URL(url as string);
+    expect(parsed.searchParams.get("text")).toBe(
+      "Hola Cluck Club, quiero pedir:\n\n" +
+        "\u2022 1 Big Cluck\n\n" +
+        "Total: $24k",
+    );
+  });
+
+  it("URL-encodes special characters in wings flavor", () => {
+    const url = buildWhatsappUrl([wingsLine]) as string;
+    const parsed = new URL(url);
+    const text = parsed.searchParams.get("text") ?? "";
+    expect(text).toContain("alitas BBQ Ahumada");
+    // No raw spaces inside the text parameter portion of the URL.
+    const textSegment = url.split("?text=")[1] ?? "";
+    expect(textSegment).not.toMatch(/ /);
+  });
+});
