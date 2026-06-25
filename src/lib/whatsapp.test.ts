@@ -3,6 +3,7 @@ import { WHATSAPP_URL } from "#/constants/W_URL";
 import {
   buildWhatsappMessage,
   buildWhatsappUrl,
+  buildWingsId,
   type CartLine,
 } from "#/lib/whatsapp";
 
@@ -24,9 +25,17 @@ const tendersLine: CartLine = {
 
 const wingsLine: CartLine = {
   kind: "wings",
-  id: "12-BBQ Ahumada",
+  id: "wings-12-BBQ Ahumada",
   qty: 12,
-  flavor: "BBQ Ahumada",
+  sabores: ["BBQ Ahumada"],
+  unitPrice: 2500,
+};
+
+const mixedWingsLine: CartLine = {
+  kind: "wings",
+  id: "wings-12-BBQ Ahumada-Miel picante",
+  qty: 12,
+  sabores: ["Miel picante", "BBQ Ahumada"],
   unitPrice: 2500,
 };
 
@@ -49,11 +58,20 @@ describe("buildWhatsappMessage", () => {
     );
   });
 
-  it("uses Spanish-first phrasing for wings (alitas)", () => {
+  it("uses Spanish-first phrasing for wings (alitas) with a single flavor", () => {
     const message = buildWhatsappMessage([wingsLine]);
     expect(message).toBe(
       "Hola Cluck Club, quiero pedir:\n\n" +
         "\u2022 12 alitas BBQ Ahumada\n\n" +
+        `Total: $${(12 * 2500) / 1000}k`,
+    );
+  });
+
+  it("joins multiple wing flavors with '+' and dedupes the list", () => {
+    const message = buildWhatsappMessage([mixedWingsLine]);
+    expect(message).toBe(
+      "Hola Cluck Club, quiero pedir:\n\n" +
+        "\u2022 12 alitas (BBQ Ahumada + Miel picante)\n\n" +
         `Total: $${(12 * 2500) / 1000}k`,
     );
   });
@@ -95,5 +113,12 @@ describe("buildWhatsappUrl", () => {
     // No raw spaces inside the text parameter portion of the URL.
     const textSegment = url.split("?text=")[1] ?? "";
     expect(textSegment).not.toMatch(/ /);
+  });
+
+  it("buildWingsId is order-independent (sorts sabores before joining)", () => {
+    const id1 = buildWingsId(12, ["Miel picante", "BBQ Ahumada"]);
+    const id2 = buildWingsId(12, ["BBQ Ahumada", "Miel picante"]);
+    expect(id1).toBe(id2);
+    expect(id1).toBe("wings-12-BBQ Ahumada-Miel picante");
   });
 });

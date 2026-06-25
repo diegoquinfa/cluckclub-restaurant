@@ -1,6 +1,6 @@
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { cn } from "#/lib/utils";
-import type { CartLine } from "#/lib/whatsapp";
+import { type CartLine, formatWingsName } from "#/lib/whatsapp";
 
 type CartLineProps = {
   line: CartLine;
@@ -11,7 +11,7 @@ type CartLineProps = {
 
 function displayName(line: CartLine): string {
   if (line.kind === "wings") {
-    return `${line.qty} alitas ${line.flavor}`;
+    return formatWingsName(line.qty, line.sabores);
   }
   if (line.kind === "tenders") {
     return `Tenders ${line.label}`;

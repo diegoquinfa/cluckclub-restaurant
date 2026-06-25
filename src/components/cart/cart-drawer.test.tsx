@@ -13,9 +13,9 @@ const MAIN_LINE = {
 
 const WINGS_LINE = {
   kind: "wings" as const,
-  id: "12-BBQ Ahumada",
+  id: "wings-12-BBQ Ahumada",
   qty: 12,
-  flavor: "BBQ Ahumada",
+  sabores: ["BBQ Ahumada"],
   unitPrice: 2500,
 };
 

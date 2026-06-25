@@ -19,9 +19,21 @@ export type CartLine =
       kind: "wings";
       id: string;
       qty: number;
-      flavor: string;
+      sabores: string[];
       unitPrice: number;
     };
+
+export function buildWingsId(qty: number, sabores: string[]): string {
+  return `wings-${qty}-${[...sabores].sort().join("-")}`;
+}
+
+export function formatWingsName(qty: number, sabores: string[]): string {
+  const unique = [...new Set(sabores)].sort();
+  if (unique.length === 1) {
+    return `${qty} alitas ${unique[0] ?? ""}`.trim();
+  }
+  return `${qty} alitas (${unique.join(" + ")})`;
+}
 
 const WHATSAPP_PHONE_PATTERN = /wa\.me\/(\d+)/;
 
@@ -44,7 +56,7 @@ function lineSubtotalK(line: CartLine): number {
 
 function formatBullet(line: CartLine): string {
   if (line.kind === "wings") {
-    return `\u2022 ${line.qty} alitas ${line.flavor}`;
+    return `\u2022 ${formatWingsName(line.qty, line.sabores)}`;
   }
   if (line.kind === "tenders") {
     return `\u2022 ${line.qty} Tenders ${line.label}`;
