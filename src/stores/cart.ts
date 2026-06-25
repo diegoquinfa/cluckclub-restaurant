@@ -102,7 +102,7 @@ export const useCart = create<CartState>()(
       },
 
       clear: () => {
-        set({ lines: [] });
+        set({ lines: [], observation: "" });
       },
 
       setHydrated: (value) => {

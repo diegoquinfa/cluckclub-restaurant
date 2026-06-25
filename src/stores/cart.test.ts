@@ -113,6 +113,17 @@ describe("useCart - actions", () => {
     });
     expect(result.current.lines).toEqual([]);
   });
+
+  it("clear also resets observation to an empty string", () => {
+    const { result } = renderHook(() => useCart());
+    act(() => {
+      result.current.addItem(MAIN_LINE);
+      result.current.setObservation("sin picante");
+      result.current.clear();
+    });
+    expect(result.current.lines).toEqual([]);
+    expect(result.current.observation).toBe("");
+  });
 });
 
 describe("useCart - selectors", () => {
