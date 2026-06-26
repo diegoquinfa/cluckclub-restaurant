@@ -22,7 +22,7 @@ const UNIT_PRICE = 2500;
 const DEFAULT_FLAVOR = FLAVORS[0];
 const DEFAULT_PORTION: number = PORTIONS[0];
 const DEFAULT_PREP: WingsPrep = "bañadas";
-const MIN_QTY = 1;
+const MIN_QTY = 6;
 
 type WingsModalProps = {
   open: boolean;
@@ -30,7 +30,7 @@ type WingsModalProps = {
 };
 
 function blockCountFor(qty: number): number {
-  return Math.max(1, Math.floor(qty / 6));
+  return Math.floor(qty / 6);
 }
 
 function buildInitialSabores(qty: number): string[] {
@@ -129,8 +129,8 @@ export function WingsModal({ open, onOpenChange }: WingsModalProps) {
             Armá tus alitas
           </SheetTitle>
           <SheetDescription className="font-sans text-sm text-ink/70">
-            Elegí la cantidad, cómo van las salsas y un sabor por cada bloque
-            de 6. Podés mezclar.
+            Elegí la cantidad (mínimo 6), cómo van las salsas y un sabor
+            por cada bloque de 6. Podés mezclar.
           </SheetDescription>
         </SheetHeader>
 

@@ -67,12 +67,12 @@ describe("WingsModal", () => {
     expect(screen.getByText("$17.5 Mil")).toBeTruthy();
   });
 
-  it("clamps invalid custom quantities to the minimum of 1", () => {
+  it("clamps invalid custom quantities to the minimum of 6", () => {
     render(<WingsModal open onOpenChange={() => {}} />);
     const input = screen.getByLabelText(/cantidad custom/i) as HTMLInputElement;
     fireEvent.change(input, { target: { value: "0" } });
-    expect(input.value).toBe("1");
-    expect(screen.getByText("$2.5 Mil")).toBeTruthy();
+    expect(input.value).toBe("6");
+    expect(screen.getByText("$15 Mil")).toBeTruthy();
   });
 
   it("toggles between Salsa aparte and Bañadas and the active button is pressed", () => {

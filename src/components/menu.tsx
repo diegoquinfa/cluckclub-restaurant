@@ -75,7 +75,7 @@ export const MAIN_DISHES: MainDish[] = [
     ],
   },
   {
-    name: "Big Cluck",
+    name: "Big Cluck + papas",
     img: "/food/big_cluck.webp",
     alt: "Hamburguesa de churrasco de pollo apanado con queso munster",
     price: 24,
@@ -89,7 +89,7 @@ export const MAIN_DISHES: MainDish[] = [
     ],
   },
   {
-    name: "Botanita Cluck",
+    name: "Botanita Cluck + papas",
     img: "/food/botanita_cluck.webp",
     alt: "Hamburguesa de pollo apanado con doritos y guacamole",
     price: 26,
@@ -102,7 +102,7 @@ export const MAIN_DISHES: MainDish[] = [
     ],
   },
   {
-    name: "Cluckii Wrap",
+    name: "Cluckii Wrap + papas",
     img: "/food/cluckii_wrap.webp",
     alt: "Burrito relleno de tenders, queso mozzarella y cheddar",
     price: 25,
@@ -125,7 +125,7 @@ export const TENDERS_PORTIONS: PricedPortion[] = [
 
 export const WINGS = {
   unitPrice: 2500,
-  minimum: 1,
+  minimum: 6,
   promo: "cada 6 alitas = 1 salsa gratis",
   quantities: [6, 12, 24, 36],
   flavors: [
@@ -138,6 +138,8 @@ export const WINGS = {
 } as const;
 
 const FRANCESA_INGREDIENTS = [
+  "2 tenders",
+  "Salsa de la casa",
   "Salsa cluckiihoney",
   "Salsa cheddar cluck",
   "Tocineta",
@@ -146,25 +148,26 @@ const FRANCESA_INGREDIENTS = [
 
 export const ACCOMPANIMENTS: PricedItem[] = [
   {
-    name: "Papas con Tenders",
+    name: "Tenders + papas",
     img: "/food/fries_with_tenders.webp",
-    alt: "Combo de papas con tenders crujientes",
+    alt: "Combo de tenders crujientes + papas",
     price: 19,
   },
 ];
 
 export const ADDITIONAL_SIDES: PricedItem[] = [
   { name: "Papas Francesas" },
-  { name: "Aros cebolla" },
+  { name: "Aros cebolla", price: 4 },
   { name: "Papas 120g", price: 4 },
 ];
 
 export const ADDITIONAL_SAUCES: PricedItem[] = [
   { name: "GuacaCluck", price: 3 },
-  { name: "La del Club", price: 3 },
-  { name: "Salsa bufalo", price: 3 },
-  { name: "Miel", price: 3 },
-  { name: "Salsa cheddar", price: 3 },
+  { name: "Salsa de la casa", price: 3 },
+  { name: "Miel picante", price: 3 },
+  { name: "Miel mostaza", price: 3 },
+  { name: "Bbq", price: 3 },
+  { name: "Ajo parmesano", price: 3 },
 ];
 
 export const DRINKS: PricedItem[] = [
