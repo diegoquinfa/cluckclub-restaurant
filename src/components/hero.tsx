@@ -33,10 +33,10 @@ export function Hero() {
               NO ES
             </span>
             <span className="block text-outline text-[clamp(2.5rem,11vw,5.5rem)]">
-              FAST FOOD
+              FAST FOOD ES
             </span>
             <span className="block text-[clamp(2.5rem,11vw,5.5rem)] text-red">
-              ES CLUCK CLUB
+              CLUCK CLUB
             </span>
           </h1>
 
