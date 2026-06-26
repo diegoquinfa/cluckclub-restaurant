@@ -428,7 +428,7 @@ export function Menu() {
             <div className="flex flex-col gap-8">
               <article className="border-[3px] border-ink bg-bone p-5 shadow-[6px_6px_0_0_var(--color-ink)]">
                 <h4 className="font-display text-2xl leading-tight text-ink">
-                  Chips de papa
+                  Adicionales
                 </h4>
                 <div className="mt-3 flex flex-col gap-2">
                   {ADDITIONAL_SIDES.map((s) =>
