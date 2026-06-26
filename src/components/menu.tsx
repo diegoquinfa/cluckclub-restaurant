@@ -166,9 +166,9 @@ export const ADDITIONAL_SIDES: PricedItem[] = [
 export const ADDITIONAL_SAUCES: PricedItem[] = [
   { name: "GuacaCluck", price: 3 },
   { name: "La del Club", price: 3 },
-  { name: "Hot club", price: 3 },
-  { name: "cluckiihoney", price: 3 },
-  { name: "cheddar cluck", price: 3 },
+  { name: "Salsa bufalo", price: 3 },
+  { name: "Miel", price: 3 },
+  { name: "Salsa cheddar", price: 3 },
 ];
 
 export const DRINKS: PricedItem[] = [
