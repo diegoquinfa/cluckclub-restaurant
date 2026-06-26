@@ -68,7 +68,8 @@ export const MAIN_DISHES: MainDish[] = [
     ingredients: [
       "Pan mini perro",
       "Tenders pollo (65 gr)",
-      "Salsa de la casa y chedar",
+      "Salsa de la casa",
+      "Salsa cheddar",
       "Tocineta crunch",
       "Cebolla crispy",
       "Cebollín fresco",
