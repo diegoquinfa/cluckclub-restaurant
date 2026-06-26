@@ -109,10 +109,10 @@ export const MAIN_DISHES: MainDish[] = [
     ingredients: [
       "3 tenders (65 gr c/u)",
       "Queso Mozzarella",
-      "Salsa queso crema y ajo",
       "Tocineta crunch",
       "Mix lechugas",
       "Salsa miel mostaza",
+      "Salsa queso crema y ajo",
     ],
   },
 ];
