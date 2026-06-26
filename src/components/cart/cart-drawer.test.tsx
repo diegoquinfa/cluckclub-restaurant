@@ -13,10 +13,11 @@ const MAIN_LINE = {
 
 const WINGS_LINE = {
   kind: "wings" as const,
-  id: "wings-12-BBQ Ahumada",
+  id: "wings-12-BBQ Ahumada-bañadas",
   qty: 12,
   sabores: ["BBQ Ahumada"],
   unitPrice: 2500,
+  prep: "bañadas" as const,
 };
 
 let openSpy: ReturnType<typeof vi.fn>;
@@ -43,9 +44,9 @@ describe("CartDrawer", () => {
     });
     render(<CartDrawer open onOpenChange={() => {}} />);
     expect(screen.getByText("Big Cluck")).toBeTruthy();
-    expect(screen.getByText(/12 alitas BBQ Ahumada/)).toBeTruthy();
+    expect(screen.getByText(/12 alitas bañadas \(BBQ Ahumada\)/)).toBeTruthy();
     // 1*24 + 12*2500/1000 = 24 + 30 = 54
-    expect(screen.getByText("$54k")).toBeTruthy();
+    expect(screen.getByText("$54 Mil")).toBeTruthy();
   });
 
   it("increments line quantity when the plus button is pressed", () => {

@@ -7,7 +7,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "#/components/ui/sheet";
-import { buildWingsId, type CartLine } from "#/lib/whatsapp";
+import { buildWingsId, type CartLine, type WingsPrep } from "#/lib/whatsapp";
 import { useCart } from "#/stores/cart";
 
 const PORTIONS = [6, 12, 24, 36] as const;
@@ -20,18 +20,24 @@ const FLAVORS = [
 ] as const;
 const UNIT_PRICE = 2500;
 const DEFAULT_FLAVOR = FLAVORS[0];
-const DEFAULT_PORTION = PORTIONS[0];
+const DEFAULT_PORTION: number = PORTIONS[0];
+const DEFAULT_PREP: WingsPrep = "bañadas";
+const MIN_QTY = 1;
 
 type WingsModalProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 };
 
-function buildInitialSabores(qty: (typeof PORTIONS)[number]): string[] {
-  return Array(qty / 6).fill(DEFAULT_FLAVOR);
+function blockCountFor(qty: number): number {
+  return Math.max(1, Math.floor(qty / 6));
 }
 
-function portionLabelK(qty: (typeof PORTIONS)[number]): number {
+function buildInitialSabores(qty: number): string[] {
+  return Array(blockCountFor(qty)).fill(DEFAULT_FLAVOR);
+}
+
+function portionPriceK(qty: number): number {
   return (qty * UNIT_PRICE) / 1000;
 }
 
@@ -47,18 +53,23 @@ function chipClass(active: boolean) {
     : "inline-flex items-center gap-1 border-[3px] border-ink bg-yellow px-3 py-1 font-mono text-sm font-bold text-ink shadow-[3px_3px_0_0_var(--color-ink)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5";
 }
 
+function inputClass() {
+  return "w-24 border-[3px] border-ink bg-cream px-3 py-1 font-mono text-sm font-bold text-ink shadow-[2px_2px_0_0_var(--color-ink)] focus:outline-hidden focus:ring-2 focus:ring-ring";
+}
+
 export function WingsModal({ open, onOpenChange }: WingsModalProps) {
-  const [qty, setQty] = useState<(typeof PORTIONS)[number]>(DEFAULT_PORTION);
+  const [qty, setQty] = useState<number>(DEFAULT_PORTION);
+  const [prep, setPrep] = useState<WingsPrep>(DEFAULT_PREP);
   const [sabores, setSabores] = useState<string[]>(() =>
     buildInitialSabores(DEFAULT_PORTION),
   );
   const addItem = useCart((state) => state.addItem);
 
-  const blockCount = qty / 6;
+  const blockCount = blockCountFor(qty);
 
-  const handlePortionChange = (newQty: (typeof PORTIONS)[number]) => {
+  const handlePortionChange = (newQty: number) => {
     setQty(newQty);
-    const newBlockCount = newQty / 6;
+    const newBlockCount = blockCountFor(newQty);
     setSabores((prev) => {
       if (prev.length < newBlockCount) {
         return [
@@ -70,22 +81,30 @@ export function WingsModal({ open, onOpenChange }: WingsModalProps) {
     });
   };
 
+  const handleCustomQtyChange = (raw: string) => {
+    const parsed = Number.parseInt(raw, 10);
+    const next = Number.isFinite(parsed) && parsed >= MIN_QTY ? parsed : MIN_QTY;
+    handlePortionChange(next);
+  };
+
   const handleSaborChange = (index: number, value: string) => {
     setSabores((prev) => prev.map((s, i) => (i === index ? value : s)));
   };
 
   const reset = () => {
     setQty(DEFAULT_PORTION);
+    setPrep(DEFAULT_PREP);
     setSabores(buildInitialSabores(DEFAULT_PORTION));
   };
 
   const handleConfirm = () => {
     const line: CartLine = {
       kind: "wings",
-      id: buildWingsId(qty, sabores),
+      id: buildWingsId(qty, sabores, prep),
       qty,
       unitPrice: UNIT_PRICE,
       sabores,
+      prep,
     };
     addItem(line);
     onOpenChange(false);
@@ -97,7 +116,7 @@ export function WingsModal({ open, onOpenChange }: WingsModalProps) {
     reset();
   };
 
-  const totalK = portionLabelK(qty);
+  const totalK = portionPriceK(qty);
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -110,7 +129,8 @@ export function WingsModal({ open, onOpenChange }: WingsModalProps) {
             Armá tus alitas
           </SheetTitle>
           <SheetDescription className="font-sans text-sm text-ink/70">
-            Cada bloque de 6 alitas elegís un sabor. Podés mezclar.
+            Elegí la cantidad, cómo van las salsas y un sabor por cada bloque
+            de 6. Podés mezclar.
           </SheetDescription>
         </SheetHeader>
 
@@ -128,9 +148,51 @@ export function WingsModal({ open, onOpenChange }: WingsModalProps) {
                   aria-pressed={p === qty}
                   className={chipClass(p === qty)}
                 >
-                  x{p} · ${portionLabelK(p)}k
+                  x{p} · ${portionPriceK(p)} Mil
                 </button>
               ))}
+            </div>
+            <div className="flex items-center gap-2">
+              <label
+                htmlFor="custom-qty"
+                className="font-mono text-xs font-bold uppercase tracking-widest text-ink/70"
+              >
+                Otra cantidad
+              </label>
+              <input
+                id="custom-qty"
+                type="number"
+                min={MIN_QTY}
+                step={1}
+                value={qty}
+                onChange={(e) => handleCustomQtyChange(e.target.value)}
+                aria-label="Cantidad custom de alitas"
+                className={inputClass()}
+              />
+            </div>
+          </fieldset>
+
+          <fieldset className="m-0 flex flex-col gap-3 border-0 p-0">
+            <legend className="font-mono text-xs font-bold uppercase tracking-widest text-red">
+              Preparación
+            </legend>
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => setPrep("aparte")}
+                aria-pressed={prep === "aparte"}
+                className={chipClass(prep === "aparte")}
+              >
+                Salsa aparte
+              </button>
+              <button
+                type="button"
+                onClick={() => setPrep("bañadas")}
+                aria-pressed={prep === "bañadas"}
+                className={chipClass(prep === "bañadas")}
+              >
+                Bañadas en salsa
+              </button>
             </div>
           </fieldset>
 
@@ -175,7 +237,7 @@ export function WingsModal({ open, onOpenChange }: WingsModalProps) {
               data-testid="wings-modal-total"
               className="border-[3px] border-ink bg-yellow px-3 py-1 font-display text-2xl text-ink shadow-[2px_2px_0_0_var(--color-ink)]"
             >
-              ${totalK}k
+              ${totalK} Mil
             </span>
           </div>
           <div className="flex flex-col gap-2">

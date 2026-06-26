@@ -49,20 +49,48 @@ describe("WingsModal", () => {
 
   it("shows the correct total in the footer based on the selected portion", () => {
     render(<WingsModal open onOpenChange={() => {}} />);
-    // default x6 -> 15k
-    expect(screen.getByText("$15k")).toBeTruthy();
+    // default x6 -> 15 Mil
+    expect(screen.getByText("$15 Mil")).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: /x12/i }));
-    expect(screen.getByText("$30k")).toBeTruthy();
+    expect(screen.getByText("$30 Mil")).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: /x24/i }));
-    expect(screen.getByText("$60k")).toBeTruthy();
+    expect(screen.getByText("$60 Mil")).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: /x36/i }));
-    expect(screen.getByText("$90k")).toBeTruthy();
+    expect(screen.getByText("$90 Mil")).toBeTruthy();
+  });
+
+  it("shows non-integer totals for custom quantities (e.g. 7 alitas = $17.5 Mil)", () => {
+    render(<WingsModal open onOpenChange={() => {}} />);
+    const input = screen.getByLabelText(/cantidad custom/i) as HTMLInputElement;
+    fireEvent.change(input, { target: { value: "7" } });
+    // 7 * 2500 / 1000 = 17.5
+    expect(screen.getByText("$17.5 Mil")).toBeTruthy();
+  });
+
+  it("clamps invalid custom quantities to the minimum of 1", () => {
+    render(<WingsModal open onOpenChange={() => {}} />);
+    const input = screen.getByLabelText(/cantidad custom/i) as HTMLInputElement;
+    fireEvent.change(input, { target: { value: "0" } });
+    expect(input.value).toBe("1");
+    expect(screen.getByText("$2.5 Mil")).toBeTruthy();
+  });
+
+  it("toggles between Salsa aparte and Bañadas and the active button is pressed", () => {
+    render(<WingsModal open onOpenChange={() => {}} />);
+    const aparteBtn = screen.getByRole("button", { name: /salsa aparte/i });
+    const bañadasBtn = screen.getByRole("button", { name: /bañadas en salsa/i });
+    // Default is "bañadas"
+    expect(bañadasBtn.getAttribute("aria-pressed")).toBe("true");
+    expect(aparteBtn.getAttribute("aria-pressed")).toBe("false");
+    fireEvent.click(aparteBtn);
+    expect(aparteBtn.getAttribute("aria-pressed")).toBe("true");
+    expect(bañadasBtn.getAttribute("aria-pressed")).toBe("false");
   });
 
   it("clicking Agregar al carrito adds a wings line with the correct shape and closes the modal", () => {
     const onOpenChange = vi.fn();
     render(<WingsModal open onOpenChange={onOpenChange} />);
-    // default: x6, sabor Miel picante
+    // default: x6, sabor Miel picante, prep bañadas
     fireEvent.click(
       screen.getByRole("button", { name: /agregar al carrito/i }),
     );
@@ -71,10 +99,11 @@ describe("WingsModal", () => {
     const line = lines[0];
     expect(line?.kind).toBe("wings");
     expect(line).toMatchObject({
-      id: "wings-6-Miel picante",
+      id: "wings-6-Miel picante-bañadas",
       qty: 6,
       sabores: ["Miel picante"],
       unitPrice: 2500,
+      prep: "bañadas",
     });
     expect(onOpenChange).toHaveBeenCalledWith(false);
   });
@@ -97,10 +126,25 @@ describe("WingsModal", () => {
     const line = useCart.getState().lines[0];
     expect(line).toMatchObject({
       kind: "wings",
-      id: "wings-12-BBQ Ahumada-Miel picante", // sorted, order-independent
+      id: "wings-12-BBQ Ahumada-Miel picante-bañadas", // sorted, order-independent
       qty: 12,
       sabores: ["Miel picante", "BBQ Ahumada"],
       unitPrice: 2500,
+      prep: "bañadas",
+    });
+  });
+
+  it("persists the prep choice (aparte) in the added cart line", () => {
+    const onOpenChange = vi.fn();
+    render(<WingsModal open onOpenChange={onOpenChange} />);
+    fireEvent.click(screen.getByRole("button", { name: /salsa aparte/i }));
+    fireEvent.click(
+      screen.getByRole("button", { name: /agregar al carrito/i }),
+    );
+    const line = useCart.getState().lines[0];
+    expect(line).toMatchObject({
+      id: "wings-6-Miel picante-aparte",
+      prep: "aparte",
     });
   });
 
@@ -128,9 +172,11 @@ describe("WingsModal", () => {
     // close and reopen
     rerender(<WingsModal open={false} onOpenChange={onOpenChange} />);
     rerender(<WingsModal open onOpenChange={onOpenChange} />);
-    // Should be back to x6 default
+    // Should be back to x6 default with bañadas prep
     const x6Button = screen.getByRole("button", { name: /x6/i });
     expect(x6Button.getAttribute("aria-pressed")).toBe("true");
     expect(screen.getAllByRole("combobox")).toHaveLength(1);
+    const bañadasBtn = screen.getByRole("button", { name: /bañadas en salsa/i });
+    expect(bañadasBtn.getAttribute("aria-pressed")).toBe("true");
   });
 });

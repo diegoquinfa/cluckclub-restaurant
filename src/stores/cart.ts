@@ -22,7 +22,7 @@ interface CartState {
 const OBSERVATION_MAX_LENGTH = 500;
 
 const STORAGE_KEY = "cluck-cart";
-const STORAGE_VERSION = 1;
+const STORAGE_VERSION = 2;
 
 const safeStorage = {
   getItem: (name: string): string | null => {

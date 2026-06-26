@@ -25,18 +25,20 @@ const tendersLine: CartLine = {
 
 const wingsLine: CartLine = {
   kind: "wings",
-  id: "wings-12-BBQ Ahumada",
+  id: "wings-12-BBQ Ahumada-bañadas",
   qty: 12,
   sabores: ["BBQ Ahumada"],
   unitPrice: 2500,
+  prep: "bañadas",
 };
 
 const mixedWingsLine: CartLine = {
   kind: "wings",
-  id: "wings-12-BBQ Ahumada-Miel picante",
+  id: "wings-12-BBQ Ahumada-Miel picante-bañadas",
   qty: 12,
   sabores: ["Miel picante", "BBQ Ahumada"],
   unitPrice: 2500,
+  prep: "bañadas",
 };
 
 const PHONE_FROM_URL = (() => {
@@ -54,7 +56,7 @@ describe("buildWhatsappMessage", () => {
     expect(message).toBe(
       "Hola Cluck Club, quiero pedir:\n\n" +
         "\u2022 1 Big Cluck\n\n" +
-        "Total: $24k",
+        "Total: $24 Mil",
     );
   });
 
@@ -62,8 +64,8 @@ describe("buildWhatsappMessage", () => {
     const message = buildWhatsappMessage([wingsLine]);
     expect(message).toBe(
       "Hola Cluck Club, quiero pedir:\n\n" +
-        "\u2022 12 alitas BBQ Ahumada\n\n" +
-        `Total: $${(12 * 2500) / 1000}k`,
+        "\u2022 12 alitas bañadas (BBQ Ahumada)\n\n" +
+        `Total: $${(12 * 2500) / 1000} Mil`,
     );
   });
 
@@ -71,9 +73,22 @@ describe("buildWhatsappMessage", () => {
     const message = buildWhatsappMessage([mixedWingsLine]);
     expect(message).toBe(
       "Hola Cluck Club, quiero pedir:\n\n" +
-        "\u2022 12 alitas (BBQ Ahumada + Miel picante)\n\n" +
-        `Total: $${(12 * 2500) / 1000}k`,
+        "\u2022 12 alitas bañadas (BBQ Ahumada + Miel picante)\n\n" +
+        `Total: $${(12 * 2500) / 1000} Mil`,
     );
+  });
+
+  it("uses 'salsa aparte' phrasing when prep is aparte", () => {
+    const aparteLine: CartLine = {
+      kind: "wings",
+      id: "wings-12-Buffalo-aparte",
+      qty: 12,
+      sabores: ["Buffalo"],
+      unitPrice: 2500,
+      prep: "aparte",
+    };
+    const message = buildWhatsappMessage([aparteLine]);
+    expect(message).toContain("12 alitas salsa aparte (Buffalo)");
   });
 
   it("uses the label for tenders lines", () => {
@@ -81,7 +96,7 @@ describe("buildWhatsappMessage", () => {
     expect(message).toBe(
       "Hola Cluck Club, quiero pedir:\n\n" +
         "\u2022 1 Tenders x4\n\n" +
-        "Total: $21k",
+        "Total: $21 Mil",
     );
   });
 
@@ -90,7 +105,7 @@ describe("buildWhatsappMessage", () => {
     expect(message).toBe(
       "Hola Cluck Club, quiero pedir:\n\n" +
         "\u2022 1 Big Cluck\n\n" +
-        "Total: $24k",
+        "Total: $24 Mil",
     );
     expect(message).not.toContain("Observación");
   });
@@ -111,7 +126,7 @@ describe("buildWhatsappMessage", () => {
       "Hola Cluck Club, quiero pedir:\n\n" +
         "\u2022 1 Big Cluck\n\n" +
         "Observación: retirar 21hs\n\n" +
-        "Total: $24k",
+        "Total: $24 Mil",
     );
   });
 
@@ -141,7 +156,7 @@ describe("buildWhatsappUrl", () => {
     expect(parsed.searchParams.get("text")).toBe(
       "Hola Cluck Club, quiero pedir:\n\n" +
         "\u2022 1 Big Cluck\n\n" +
-        "Total: $24k",
+        "Total: $24 Mil",
     );
   });
 
@@ -149,7 +164,7 @@ describe("buildWhatsappUrl", () => {
     const url = buildWhatsappUrl([wingsLine]) as string;
     const parsed = new URL(url);
     const text = parsed.searchParams.get("text") ?? "";
-    expect(text).toContain("alitas BBQ Ahumada");
+    expect(text).toContain("alitas bañadas (BBQ Ahumada)");
     // No raw spaces inside the text parameter portion of the URL.
     const textSegment = url.split("?text=")[1] ?? "";
     expect(textSegment).not.toMatch(/ /);
@@ -164,9 +179,17 @@ describe("buildWhatsappUrl", () => {
   });
 
   it("buildWingsId is order-independent (sorts sabores before joining)", () => {
-    const id1 = buildWingsId(12, ["Miel picante", "BBQ Ahumada"]);
-    const id2 = buildWingsId(12, ["BBQ Ahumada", "Miel picante"]);
+    const id1 = buildWingsId(12, ["Miel picante", "BBQ Ahumada"], "bañadas");
+    const id2 = buildWingsId(12, ["BBQ Ahumada", "Miel picante"], "bañadas");
     expect(id1).toBe(id2);
-    expect(id1).toBe("wings-12-BBQ Ahumada-Miel picante");
+    expect(id1).toBe("wings-12-BBQ Ahumada-Miel picante-bañadas");
+  });
+
+  it("buildWingsId distinguishes prep methods (bañadas vs aparte) as different ids", () => {
+    const idBañadas = buildWingsId(6, ["BBQ Ahumada"], "bañadas");
+    const idAparte = buildWingsId(6, ["BBQ Ahumada"], "aparte");
+    expect(idBañadas).not.toBe(idAparte);
+    expect(idBañadas).toBe("wings-6-BBQ Ahumada-bañadas");
+    expect(idAparte).toBe("wings-6-BBQ Ahumada-aparte");
   });
 });

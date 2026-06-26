@@ -11,7 +11,7 @@ type CartLineProps = {
 
 function displayName(line: CartLine): string {
   if (line.kind === "wings") {
-    return formatWingsName(line.qty, line.sabores);
+    return formatWingsName(line.qty, line.sabores, line.prep);
   }
   if (line.kind === "tenders") {
     return `Tenders ${line.label}`;
@@ -81,7 +81,7 @@ export function CartLineRow({
           </button>
         </div>
         <span className="border-[3px] border-ink bg-cream px-3 py-1 font-mono text-sm font-bold text-ink shadow-[2px_2px_0_0_var(--color-ink)]">
-          ${subtotal}k
+          ${subtotal} Mil
         </span>
       </div>
     </article>

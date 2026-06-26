@@ -57,11 +57,10 @@ export function Hero() {
             <Link
               to="/"
               hash="menu"
-              onClick={(e) => {
+              onClick={() => {
                 // Si ya estamos en la home, evitamos que el router "no haga nada"
                 // y forzamos el scroll manualmente.
                 if (window.location.pathname === "/") {
-                  e.preventDefault();
                   scrollToMenu();
                 }
               }}
@@ -92,7 +91,7 @@ export function Hero() {
 
           <div className="relative z-10 animate-float border-[5px] border-ink bg-yellow p-3 shadow-[12px_12px_0_0_var(--color-orange)]">
             <Image
-              src="/cluck-club-caja-tenders.png"
+              src="/food/cluck_fries.webp"
               alt="Caja de Cluck Club abierta llena de tenders crujientes"
               width={640}
               height={640}

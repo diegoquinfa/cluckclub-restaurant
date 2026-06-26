@@ -20,10 +20,11 @@ const SAUCE_LINE = {
 
 const WINGS_LINE = {
   kind: "wings" as const,
-  id: "wings-12-BBQ Ahumada",
+  id: "wings-12-BBQ Ahumada-bañadas",
   qty: 12,
   sabores: ["BBQ Ahumada"],
   unitPrice: 2500,
+  prep: "bañadas" as const,
 };
 
 const TENDERS_LINE = {
@@ -151,7 +152,7 @@ describe("useCart - selectors", () => {
 });
 
 describe("useCart - persistence", () => {
-  it("persists only lines (not hydrated) to localStorage key cluck-cart version 1", async () => {
+  it("persists only lines (not hydrated) to localStorage key cluck-cart version 2", async () => {
     const { result } = renderHook(() => useCart());
     act(() => {
       result.current.addItem(MAIN_LINE);
@@ -164,7 +165,7 @@ describe("useCart - persistence", () => {
       state: Record<string, unknown>;
       version: number;
     };
-    expect(parsed.version).toBe(1);
+    expect(parsed.version).toBe(2);
     expect(parsed.state).toHaveProperty("lines");
     expect(parsed.state).not.toHaveProperty("hydrated");
     expect(parsed.state.lines).toEqual([MAIN_LINE]);
@@ -197,7 +198,7 @@ describe("useCart - persistence", () => {
     }
   });
 
-  it("persists observation alongside lines (not hydrated) at version 1", async () => {
+  it("persists observation alongside lines (not hydrated) at version 2", async () => {
     const { result } = renderHook(() => useCart());
     act(() => {
       result.current.setObservation("retirar 21hs");
@@ -210,14 +211,14 @@ describe("useCart - persistence", () => {
       state: Record<string, unknown>;
       version: number;
     };
-    expect(parsed.version).toBe(1);
+    expect(parsed.version).toBe(2);
     expect(parsed.state).toHaveProperty("lines");
     expect(parsed.state).toHaveProperty("observation", "retirar 21hs");
     expect(parsed.state).not.toHaveProperty("hydrated");
   });
 
-  it("hydrates a v1 cart blob (no observation key) with observation = '' and lines preserved", async () => {
-    // Inject a legacy v1 cart: only lines, no observation field, version 1.
+  it("rejects a v1 cart blob (schema changed: wings now require prep) and starts empty", async () => {
+    // Legacy v1 cart: no observation, no prep field on wings.
     localStorage.setItem(
       "cluck-cart",
       JSON.stringify({
@@ -226,14 +227,12 @@ describe("useCart - persistence", () => {
       }),
     );
 
-    // Force a re-read from storage and wait for the hydration promise.
     await act(async () => {
       await useCart.persist.rehydrate();
     });
 
-    const state = useCart.getState();
-    expect(state.lines).toEqual([MAIN_LINE, SAUCE_LINE]);
-    expect(state.observation).toBe("");
+    // v1 is no longer supported: cart starts empty.
+    expect(useCart.getState().lines).toEqual([]);
   });
 });
 

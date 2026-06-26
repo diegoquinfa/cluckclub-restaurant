@@ -112,7 +112,7 @@ const JSON_LD = {
       "@id": `${SITE_ORIGIN}/#restaurant`,
       name: "Cluck Club",
       url: SITE_ORIGIN,
-      logo: `${SITE_ORIGIN}/cluck-club-caja-tenders.png`,
+      logo: `${SITE_ORIGIN}/food/crispy_tenders.webp`,
       image: `${SITE_ORIGIN}/og_web_cluckclub.webp`,
       telephone: "+57-302-6688105",
       priceRange: "$$",

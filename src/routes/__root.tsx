@@ -61,7 +61,7 @@ export const Route = createRootRoute({
       },
       {
         rel: "apple-touch-icon",
-        href: "/cluck-club-caja-tenders.png",
+        href: "/food/crispy_tenders.webp",
       },
       {
         rel: "manifest",

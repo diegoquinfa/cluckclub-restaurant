@@ -1,5 +1,7 @@
 import { WHATSAPP_URL } from "#/constants/W_URL";
 
+export type WingsPrep = "aparte" | "bañadas";
+
 export type CartLine =
   | {
       kind: "main" | "sauce" | "drink" | "combo";
@@ -21,18 +23,28 @@ export type CartLine =
       qty: number;
       sabores: string[];
       unitPrice: number;
+      prep: WingsPrep;
     };
 
-export function buildWingsId(qty: number, sabores: string[]): string {
-  return `wings-${qty}-${[...sabores].sort().join("-")}`;
+export function buildWingsId(
+  qty: number,
+  sabores: string[],
+  prep: WingsPrep,
+): string {
+  return `wings-${qty}-${[...sabores].sort().join("-")}-${prep}`;
 }
 
-export function formatWingsName(qty: number, sabores: string[]): string {
+export function formatWingsName(
+  qty: number,
+  sabores: string[],
+  prep: WingsPrep,
+): string {
+  const prepLabel = prep === "bañadas" ? "bañadas" : "salsa aparte";
   const unique = [...new Set(sabores)].sort();
   if (unique.length === 1) {
-    return `${qty} alitas ${unique[0] ?? ""}`.trim();
+    return `${qty} alitas ${prepLabel} (${unique[0] ?? ""})`.trim();
   }
-  return `${qty} alitas (${unique.join(" + ")})`;
+  return `${qty} alitas ${prepLabel} (${unique.join(" + ")})`;
 }
 
 const WHATSAPP_PHONE_PATTERN = /wa\.me\/(\d+)/;
@@ -56,7 +68,7 @@ function lineSubtotalK(line: CartLine): number {
 
 function formatBullet(line: CartLine): string {
   if (line.kind === "wings") {
-    return `\u2022 ${formatWingsName(line.qty, line.sabores)}`;
+    return `\u2022 ${formatWingsName(line.qty, line.sabores, line.prep)}`;
   }
   if (line.kind === "tenders") {
     return `\u2022 ${line.qty} Tenders ${line.label}`;
@@ -77,7 +89,7 @@ export function buildWhatsappMessage(
   const observationBlock = trimmedObservation
     ? `\n\nObservación: ${trimmedObservation}\n\n`
     : "\n\n";
-  return `Hola Cluck Club, quiero pedir:\n\n${bullets}${observationBlock}Total: $${totalK}k`;
+  return `Hola Cluck Club, quiero pedir:\n\n${bullets}${observationBlock}Total: $${totalK} Mil`;
 }
 
 export function buildWhatsappUrl(

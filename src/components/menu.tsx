@@ -16,11 +16,11 @@ type MainDish = {
 };
 
 type PricedPortion = { label: string; price: number };
-type PricedItem = { name: string; price?: number };
+type PricedItem = { name: string; img?: string; alt?: string; price?: number };
 
 // Pure helper — kept exported so tests can exercise it directly.
 export function formatPrice(price: number): string {
-  return `${price}k`;
+  return `$${price} Mil`;
 }
 
 // Reusable price chip. Exported for unit tests; still defined locally
@@ -49,7 +49,7 @@ function AgregarButton({
       aria-label={ariaLabel}
       className={
         className ??
-        "inline-flex items-center justify-center gap-1 border-[3px] border-ink bg-red px-2.5 py-1 font-mono text-[0.7rem] font-bold uppercase tracking-widest text-bone shadow-[2px_2px_0_0_var(--color-ink)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0"
+        "inline-flex items-center justify-center gap-1 border-[3px] border-ink bg-red px-2.5 py-2 font-mono text-[0.7rem] font-bold uppercase tracking-widest text-bone shadow-[2px_2px_0_0_var(--color-ink)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0"
       }
     >
       <ShoppingBag aria-hidden="true" className="size-3" />
@@ -61,7 +61,7 @@ function AgregarButton({
 export const MAIN_DISHES: MainDish[] = [
   {
     name: "DoggiCluck",
-    img: "/cluck-club-perro-caliente-tenders.png",
+    img: "/food/doggicluck.webp",
     alt: "Perros x 2 con tenders, cheddar y tocineta crunch",
     featured: true,
     price: 23,
@@ -78,7 +78,7 @@ export const MAIN_DISHES: MainDish[] = [
   {
     name: "Big Cluck",
     subtitle: "con papas",
-    img: "/cluck-club-hamburguesa-pollo.png",
+    img: "/food/big_cluck.webp",
     alt: "Hamburguesa de churrasco de pollo apanado con queso munster",
     price: 24,
     ingredients: [
@@ -93,7 +93,7 @@ export const MAIN_DISHES: MainDish[] = [
   {
     name: "Botanita Cluck",
     subtitle: "con papas",
-    img: "/cluck-club-hamburguesa-pollo.png",
+    img: "/food/botanita_cluck.webp",
     alt: "Hamburguesa de pollo apanado con doritos y guacamole",
     price: 26,
     ingredients: [
@@ -107,7 +107,7 @@ export const MAIN_DISHES: MainDish[] = [
   },
   {
     name: "Cluckii Wrap",
-    img: "/cluck-club-burrito-tenders.png",
+    img: "/food/cluckii_wrap.webp",
     alt: "Burrito relleno de tenders, queso mozzarella y cheddar",
     price: 25,
     ingredients: [
@@ -129,7 +129,7 @@ export const TENDERS_PORTIONS: PricedPortion[] = [
 
 export const WINGS = {
   unitPrice: 2500,
-  minimum: 6,
+  minimum: 1,
   promo: "cada 6 alitas = 1 salsa gratis",
   quantities: [6, 12, 24, 36],
   flavors: [
@@ -149,7 +149,12 @@ const FRANCESA_INGREDIENTS = [
 ];
 
 export const ACCOMPANIMENTS: PricedItem[] = [
-  { name: "Papas con Tenders", price: 19 },
+  {
+    name: "Papas con Tenders",
+    img: "/food/fries_with_tenders.webp",
+    alt: "Combo de papas con tenders crujientes",
+    price: 19,
+  },
 ];
 
 export const ADDITIONAL_SIDES: PricedItem[] = [
@@ -168,11 +173,11 @@ export const ADDITIONAL_SAUCES: PricedItem[] = [
 
 export const DRINKS: PricedItem[] = [
   { name: "Agua", price: 3 },
-  { name: "Coca Cola 250", price: 3 },
-  { name: "Coca Cola Zero 250", price: 3 },
-  { name: "Manzana 250", price: 3 },
-  { name: "Pepsi 250", price: 3 },
-  { name: "Colombiana 250", price: 3 },
+  { name: "Coca Cola 250 ml", price: 3 },
+  { name: "Coca Cola Zero 250 ml", price: 3 },
+  { name: "Manzana 250 ml", price: 3 },
+  { name: "Pepsi 250 ml", price: 3 },
+  { name: "Colombiana 250 ml", price: 3 },
 ];
 
 function SectionLabel({ index, title }: { index: string; title: string }) {
@@ -224,13 +229,13 @@ export function Menu() {
                     Más pedido
                   </span>
                 )}
-                <div className="border-b-[3px] border-ink bg-cream p-4">
+                <div className="border-b-[3px] border-ink bg-cream">
                   <Image
                     src={dish.img || "/placeholder.svg"}
                     alt={dish.alt}
                     width={400}
-                    height={300}
-                    className="mx-auto h-40 w-auto object-contain"
+                    height={400}
+                    className="aspect-square w-full object-cover"
                   />
                 </div>
                 <div className="flex flex-1 flex-col p-5">
@@ -284,13 +289,13 @@ export function Menu() {
           <div className="grid gap-8 md:grid-cols-2">
             {/* Tenders */}
             <article className="flex flex-col border-[3px] border-ink bg-bone shadow-[6px_6px_0_0_var(--color-ink)]">
-              <div className="border-b-[3px] border-ink bg-cream p-4">
+              <div className="border-b-[3px] border-ink bg-cream">
                 <Image
-                  src="/cluck-club-tenders-pollo.png"
+                  src="/food/crispy_tenders.webp"
                   alt="Tenders de pollo crujientes"
                   width={400}
-                  height={300}
-                  className="mx-auto h-40 w-auto object-contain"
+                  height={400}
+                  className="aspect-square w-full object-cover"
                 />
               </div>
               <div className="flex flex-1 flex-col p-5">
@@ -303,16 +308,13 @@ export function Menu() {
                 <span className="mt-4 font-mono text-xs font-bold uppercase tracking-widest text-red">
                   Porciones
                 </span>
-                <div className="mt-2 flex flex-wrap gap-2">
+                <div className="mt-2 flex flex-col gap-2">
                   {TENDERS_PORTIONS.map((p) =>
                     p.price !== undefined ? (
-                      <div
-                        key={p.label}
-                        className="flex items-center gap-2 border-[3px] border-ink bg-yellow px-3 py-1 font-mono text-sm font-bold text-ink shadow-[3px_3px_0_0_var(--color-ink)]"
-                      >
-                        <span>
+                      <div key={p.label} className="flex items-center gap-2">
+                        <div className="flex flex-1 items-center border-[3px] border-ink bg-yellow px-3 py-2 font-mono text-sm font-bold text-ink shadow-[3px_3px_0_0_var(--color-ink)]">
                           Tenders {p.label} · {formatPrice(p.price)}
-                        </span>
+                        </div>
                         <AgregarButton
                           ariaLabel={`Agregar Tenders ${p.label}`}
                           onClick={() =>
@@ -334,13 +336,13 @@ export function Menu() {
 
             {/* Alitas */}
             <article className="flex flex-col border-[3px] border-ink bg-bone shadow-[6px_6px_0_0_var(--color-ink)]">
-              <div className="border-b-[3px] border-ink bg-cream p-4">
+              <div className="border-b-[3px] border-ink bg-cream">
                 <Image
-                  src="/cluck-club-alitas-pollo.png"
+                  src="/food/cluck_wings.webp"
                   alt="Alitas de pollo glaseadas"
                   width={400}
-                  height={300}
-                  className="mx-auto h-40 w-auto object-contain"
+                  height={400}
+                  className="aspect-square w-full object-cover"
                 />
               </div>
               <div className="flex flex-1 flex-col p-5">
@@ -398,13 +400,13 @@ export function Menu() {
           <div className="grid gap-8 md:grid-cols-2">
             {/* Francesa */}
             <article className="flex flex-col border-[3px] border-ink bg-bone shadow-[6px_6px_0_0_var(--color-ink)]">
-              <div className="border-b-[3px] border-ink bg-cream p-4">
+              <div className="border-b-[3px] border-ink bg-cream">
                 <Image
-                  src="/cluck-club-papas-francesas.png"
+                  src="/food/cluck_fries.webp"
                   alt="Papas francesas con salsa cluck y cheddar"
                   width={400}
-                  height={300}
-                  className="mx-auto h-40 w-auto object-contain"
+                  height={400}
+                  className="aspect-square w-full object-cover"
                 />
               </div>
               <div className="flex flex-1 flex-col p-5">
@@ -431,19 +433,16 @@ export function Menu() {
                 <h4 className="font-display text-2xl leading-tight text-ink">
                   Chips de papa
                 </h4>
-                <div className="mt-3 flex flex-wrap gap-2">
+                <div className="mt-3 flex flex-col gap-2">
                   {ADDITIONAL_SIDES.map((s) =>
                     s.price !== undefined ? (
-                      <div
-                        key={s.name}
-                        className="inline-flex items-center gap-2 border-[3px] border-ink bg-yellow px-3 py-1 font-sans text-sm font-medium text-ink shadow-[3px_3px_0_0_var(--color-ink)]"
-                      >
-                        <span>
+                      <div key={s.name} className="flex items-center gap-2">
+                        <div className="flex flex-1 items-center border-[3px] border-ink bg-yellow px-3 py-2 font-sans text-sm font-medium text-ink shadow-[3px_3px_0_0_var(--color-ink)]">
                           {s.name} ·{" "}
                           <span className="font-mono text-xs font-bold">
                             {formatPrice(s.price)}
                           </span>
-                        </span>
+                        </div>
                         <AgregarButton
                           ariaLabel={`Agregar ${s.name}`}
                           onClick={() =>
@@ -465,19 +464,16 @@ export function Menu() {
                 <h4 className="font-display text-2xl leading-tight text-ink">
                   Salsas extra
                 </h4>
-                <div className="mt-3 flex flex-wrap gap-2">
+                <div className="mt-3 flex flex-col gap-2">
                   {ADDITIONAL_SAUCES.map((s) =>
                     s.price !== undefined ? (
-                      <span
-                        key={s.name}
-                        className="inline-flex items-center gap-2 border-[3px] border-ink bg-cream px-3 py-1 font-sans text-sm font-medium text-ink"
-                      >
-                        <span>
+                      <div key={s.name} className="flex items-center gap-2">
+                        <div className="flex flex-1 items-center border-[3px] border-ink bg-cream px-3 py-2 font-sans text-sm font-medium text-ink">
                           {s.name} ·{" "}
                           <span className="font-mono text-xs font-bold">
                             {formatPrice(s.price)}
                           </span>
-                        </span>
+                        </div>
                         <AgregarButton
                           ariaLabel={`Agregar ${s.name}`}
                           onClick={() =>
@@ -490,7 +486,7 @@ export function Menu() {
                             })
                           }
                         />
-                      </span>
+                      </div>
                     ) : null,
                   )}
                 </div>
@@ -505,13 +501,13 @@ export function Menu() {
                 key={item.name}
                 className="flex flex-col border-[3px] border-ink bg-yellow shadow-[6px_6px_0_0_var(--color-ink)]"
               >
-                <div className="border-b-[3px] border-ink bg-cream p-4">
+                <div className="border-b-[3px] border-ink bg-cream">
                   <Image
-                    src="/placeholder.svg"
-                    alt={item.name}
+                    src={item.img ?? "/placeholder.svg"}
+                    alt={item.alt ?? item.name}
                     width={400}
-                    height={300}
-                    className="mx-auto h-40 w-auto object-contain"
+                    height={400}
+                    className="aspect-square w-full object-cover object-bottom"
                   />
                 </div>
                 <div className="flex flex-1 flex-col p-5">
@@ -521,7 +517,7 @@ export function Menu() {
                   {item.price !== undefined && <PriceChip price={item.price} />}
                   {item.price !== undefined && (
                     <AgregarButton
-                      className="mt-3 inline-flex w-fit items-center justify-center gap-2 border-[3px] border-ink bg-red px-4 py-2 font-mono text-xs font-bold uppercase tracking-widest text-bone shadow-[3px_3px_0_0_var(--color-ink)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0"
+                      className="mt-3 inline-flex w-full items-center justify-center gap-2 border-[3px] border-ink bg-red px-4 py-2 font-mono text-xs font-bold uppercase tracking-widest text-bone shadow-[3px_3px_0_0_var(--color-ink)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0"
                       ariaLabel={`Agregar ${item.name}`}
                       onClick={() =>
                         useCart.getState().addItem({

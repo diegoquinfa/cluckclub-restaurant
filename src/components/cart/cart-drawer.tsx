@@ -85,7 +85,7 @@ export function CartDrawer({ open, onOpenChange }: CartDrawerProps) {
               Total
             </span>
             <span className="border-[3px] border-ink bg-yellow px-3 py-1 font-display text-2xl text-ink shadow-[2px_2px_0_0_var(--color-ink)]">
-              ${total}k
+              ${total} Mil
             </span>
           </div>
           <div className="mb-4 flex flex-col gap-2">
