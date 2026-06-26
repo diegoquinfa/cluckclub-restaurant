@@ -173,6 +173,7 @@ export const ADDITIONAL_SAUCES: PricedItem[] = [
 export const DRINKS: PricedItem[] = [
   { name: "Agua", price: 3 },
   { name: "Kola Roman 250 ml", price: 3 },
+  { name: "Coca Cola Zero 250 ml", price: 3 },
   { name: "Manzana 250 ml", price: 3 },
   { name: "Pepsi 250 ml", price: 3 },
   { name: "Colombiana 250 ml", price: 3 },
