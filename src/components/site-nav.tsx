@@ -5,14 +5,18 @@ export function SiteNav() {
   return (
     <header className="sticky top-0 z-50 border-b-[3px] border-ink bg-yellow">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 md:px-6">
-        <Link to="/" hash="#top" className="flex items-center gap-2">
+        <a
+          href="https://cluckclub.co"
+          aria-label="Cluck Club — Inicio"
+          className="flex items-center gap-2"
+        >
           <span className="grid size-9 place-items-center border-[3px] border-ink bg-red font-display text-lg text-bone shadow-[3px_3px_0_0_var(--color-ink)]">
             C
           </span>
           <span className="font-display text-xl tracking-tight text-ink md:text-2xl">
             CLUCK CLUB
           </span>
-        </Link>
+        </a>
 
         <nav className="hidden items-center gap-6 font-mono text-xs uppercase tracking-widest text-ink md:flex">
           <Link to="/" hash="menu" className="hover:text-red">
