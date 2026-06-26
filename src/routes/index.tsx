@@ -104,6 +104,280 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
+const MENU_JSON_LD = {
+  "@type": "Menu",
+  "@id": `${SITE_ORIGIN}/#menu`,
+  name: "Carta Cluck Club",
+  inLanguage: "es-CO",
+  hasMenuSection: [
+    {
+      "@type": "MenuSection",
+      name: "Platos Fuertes",
+      hasMenuItem: [
+        {
+          "@type": "MenuItem",
+          name: "DoggiCluck x 2 + papas",
+          description:
+            "Perros x 2 con tenders, cheddar y tocineta crunch + papas",
+          offers: {
+            "@type": "Offer",
+            price: "23000",
+            priceCurrency: "COP",
+          },
+        },
+        {
+          "@type": "MenuItem",
+          name: "Big Cluck + papas",
+          description:
+            "Hamburguesa de churrasco de pollo apanado con queso munster",
+          offers: {
+            "@type": "Offer",
+            price: "24000",
+            priceCurrency: "COP",
+          },
+        },
+        {
+          "@type": "MenuItem",
+          name: "Botanera Cluck + papas",
+          description:
+            "Hamburguesa de pollo apanado con doritos y guacamole",
+          offers: {
+            "@type": "Offer",
+            price: "26000",
+            priceCurrency: "COP",
+          },
+        },
+        {
+          "@type": "MenuItem",
+          name: "Cluckii Wrap + papas",
+          description:
+            "Burrito relleno de tenders, queso mozzarella y cheddar",
+          offers: {
+            "@type": "Offer",
+            price: "25000",
+            priceCurrency: "COP",
+          },
+        },
+      ],
+    },
+    {
+      "@type": "MenuSection",
+      name: "Pollo & Alitas",
+      hasMenuItem: [
+        {
+          "@type": "MenuItem",
+          name: "Tenders x4 + papas",
+          description: "Tenders de pollo 65gr c/u, empanizados a mano + papas",
+          offers: {
+            "@type": "Offer",
+            price: "21000",
+            priceCurrency: "COP",
+          },
+        },
+        {
+          "@type": "MenuItem",
+          name: "Tenders x8 + papas",
+          description: "Tenders de pollo 65gr c/u, empanizados a mano + papas",
+          offers: {
+            "@type": "Offer",
+            price: "38000",
+            priceCurrency: "COP",
+          },
+        },
+        {
+          "@type": "MenuItem",
+          name: "Tenders x12 + papas",
+          description: "Tenders de pollo 65gr c/u, empanizados a mano + papas",
+          offers: {
+            "@type": "Offer",
+            price: "55000",
+            priceCurrency: "COP",
+          },
+        },
+        {
+          "@type": "MenuItem",
+          name: "Cluck Wings + papas",
+          description:
+            "Alitas glaseadas a mano. 5 sabores. Mínimo 6 unidades.",
+          offers: {
+            "@type": "Offer",
+            price: "2500",
+            priceCurrency: "COP",
+            eligibleQuantity: {
+              "@type": "QuantitativeValue",
+              minValue: 6,
+            },
+          },
+        },
+      ],
+    },
+    {
+      "@type": "MenuSection",
+      name: "Acompañamientos",
+      hasMenuItem: [
+        {
+          "@type": "MenuItem",
+          name: "Cluck Fries",
+          description:
+            "2 tenders + papas a la francesa + salsa de la casa + cheddar + tocineta + cebollín fresco",
+          offers: {
+            "@type": "Offer",
+            price: "19000",
+            priceCurrency: "COP",
+          },
+        },
+        {
+          "@type": "MenuItem",
+          name: "Aros de cebolla",
+          offers: {
+            "@type": "Offer",
+            price: "4000",
+            priceCurrency: "COP",
+          },
+        },
+        {
+          "@type": "MenuItem",
+          name: "Papas 120g",
+          offers: {
+            "@type": "Offer",
+            price: "4000",
+            priceCurrency: "COP",
+          },
+        },
+      ],
+    },
+    {
+      "@type": "MenuSection",
+      name: "Salsas extra",
+      hasMenuItem: [
+        {
+          "@type": "MenuItem",
+          name: "GuacaCluck",
+          offers: {
+            "@type": "Offer",
+            price: "3000",
+            priceCurrency: "COP",
+          },
+        },
+        {
+          "@type": "MenuItem",
+          name: "Salsa de la casa",
+          offers: {
+            "@type": "Offer",
+            price: "3000",
+            priceCurrency: "COP",
+          },
+        },
+        {
+          "@type": "MenuItem",
+          name: "Miel picante",
+          offers: {
+            "@type": "Offer",
+            price: "3000",
+            priceCurrency: "COP",
+          },
+        },
+        {
+          "@type": "MenuItem",
+          name: "Miel mostaza",
+          offers: {
+            "@type": "Offer",
+            price: "3000",
+            priceCurrency: "COP",
+          },
+        },
+        {
+          "@type": "MenuItem",
+          name: "Bbq",
+          offers: {
+            "@type": "Offer",
+            price: "3000",
+            priceCurrency: "COP",
+          },
+        },
+        {
+          "@type": "MenuItem",
+          name: "Ajo parmesano",
+          offers: {
+            "@type": "Offer",
+            price: "3000",
+            priceCurrency: "COP",
+          },
+        },
+        {
+          "@type": "MenuItem",
+          name: "Salsa búfalo",
+          offers: {
+            "@type": "Offer",
+            price: "3000",
+            priceCurrency: "COP",
+          },
+        },
+      ],
+    },
+    {
+      "@type": "MenuSection",
+      name: "Bebidas",
+      hasMenuItem: [
+        {
+          "@type": "MenuItem",
+          name: "Agua",
+          offers: {
+            "@type": "Offer",
+            price: "3000",
+            priceCurrency: "COP",
+          },
+        },
+        {
+          "@type": "MenuItem",
+          name: "Kola Roman 250 ml",
+          offers: {
+            "@type": "Offer",
+            price: "3000",
+            priceCurrency: "COP",
+          },
+        },
+        {
+          "@type": "MenuItem",
+          name: "Coca Cola Zero 250 ml",
+          offers: {
+            "@type": "Offer",
+            price: "3000",
+            priceCurrency: "COP",
+          },
+        },
+        {
+          "@type": "MenuItem",
+          name: "Manzana 250 ml",
+          offers: {
+            "@type": "Offer",
+            price: "3000",
+            priceCurrency: "COP",
+          },
+        },
+        {
+          "@type": "MenuItem",
+          name: "Pepsi 250 ml",
+          offers: {
+            "@type": "Offer",
+            price: "3000",
+            priceCurrency: "COP",
+          },
+        },
+        {
+          "@type": "MenuItem",
+          name: "Colombiana 250 ml",
+          offers: {
+            "@type": "Offer",
+            price: "3000",
+            priceCurrency: "COP",
+          },
+        },
+      ],
+    },
+  ],
+};
+
 const JSON_LD = {
   "@context": "https://schema.org",
   "@graph": [
@@ -143,6 +417,7 @@ const JSON_LD = {
         },
       ],
       sameAs: ["https://www.instagram.com/cluckclub.col"],
+      hasMenu: { "@id": `${SITE_ORIGIN}/#menu` },
       potentialAction: {
         "@type": "OrderAction",
         target: {
@@ -157,6 +432,7 @@ const JSON_LD = {
         deliveryMethod: "https://schema.org/ParcelService",
       },
     },
+    MENU_JSON_LD,
     {
       "@type": "WebSite",
       "@id": `${SITE_ORIGIN}/#website`,
