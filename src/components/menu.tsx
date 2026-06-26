@@ -72,7 +72,6 @@ export const MAIN_DISHES: MainDish[] = [
       "Salsa cheddar",
       "Tocineta crunch",
       "Cebolla crispy",
-      "Cebollín fresco",
     ],
   },
   {
@@ -142,7 +141,9 @@ export const WINGS = {
 
 const FRANCESA_INGREDIENTS = [
   "2 tenders",
+  "Papas a la francesa",
   "Salsa de la casa",
+  "Salsa queso cheddar",
   "Tocineta",
   "Cebollín fresco",
 ];
