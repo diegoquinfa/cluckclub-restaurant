@@ -95,7 +95,7 @@ export const MAIN_DISHES: MainDish[] = [
     price: 26,
     ingredients: [
       "Churrasco pollo apanado (250 gr)",
-      "Salsa La del Club",
+      "Salsa de la casa",
       "Salsa queso crema y ajo",
       "Doritos",
       "Mix lechuga",
@@ -109,7 +109,7 @@ export const MAIN_DISHES: MainDish[] = [
     ingredients: [
       "3 tenders (65 gr c/u)",
       "Queso Mozzarella",
-      "Queso Cheddar",
+      "Salsa queso crema y ajo",
       "Tocineta crunch",
       "Mix lechugas",
       "Salsa cluckiihoney",
@@ -140,8 +140,6 @@ export const WINGS = {
 const FRANCESA_INGREDIENTS = [
   "2 tenders",
   "Salsa de la casa",
-  "Salsa cluckiihoney",
-  "Salsa cheddar cluck",
   "Tocineta",
   "Cebollín fresco",
 ];
