@@ -30,10 +30,10 @@ export function Hero() {
 
           <h1 className="mt-5 font-display text-ink">
             <span className="block text-[clamp(2.5rem,11vw,5.5rem)]">
-              NO ES
+              NO ES{" "}
             </span>
             <span className="block text-outline text-[clamp(2.5rem,11vw,5.5rem)]">
-              FAST FOOD ES
+              FAST FOOD ES{" "}
             </span>
             <span className="block text-[clamp(2.5rem,11vw,5.5rem)] text-red">
               CLUCK CLUB

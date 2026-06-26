@@ -420,6 +420,24 @@ export function Menu() {
                 <h4 className="font-display text-2xl leading-tight text-ink">
                   Cluck Fries
                 </h4>
+                <PriceChip price={19} />
+                <button
+                  type="button"
+                  onClick={() =>
+                    useCart.getState().addItem({
+                      kind: "combo",
+                      id: "Cluck Fries",
+                      name: "Cluck Fries",
+                      price: 19,
+                      qty: 1,
+                    })
+                  }
+                  aria-label="Agregar Cluck Fries"
+                  className="mt-4 inline-flex w-full items-center justify-center gap-2 border-[3px] border-ink bg-red px-3 py-2 font-mono text-xs font-bold uppercase tracking-widest text-bone shadow-[4px_4px_0_0_var(--color-ink)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0"
+                >
+                  <ShoppingBag aria-hidden="true" className="size-4" />
+                  Agregar
+                </button>
                 <ul className="mt-3 flex-1 space-y-1">
                   {FRANCESA_INGREDIENTS.map((ing) => (
                     <li

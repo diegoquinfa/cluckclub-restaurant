@@ -150,11 +150,11 @@ const JSON_LD = {
           urlTemplate:
             "https://wa.me/573026688105?text=Hola%20Cluck%20Club%2C%20quiero%20pedir",
           actionPlatform: [
-            "http://schema.org/DesktopWebPlatform",
-            "http://schema.org/MobileWebPlatform",
+            "https://schema.org/DesktopWebPlatform",
+            "https://schema.org/MobileWebPlatform",
           ],
         },
-        deliveryMethod: "http://purl.org/goodrelations/v1#DeliveryModePickUp",
+        deliveryMethod: "https://schema.org/ParcelService",
       },
     },
     {
