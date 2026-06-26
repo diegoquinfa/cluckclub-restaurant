@@ -60,16 +60,15 @@ function AgregarButton({
 
 export const MAIN_DISHES: MainDish[] = [
   {
-    name: "DoggiCluck",
+    name: "DoggiCluck x 2 + papas",
     img: "/food/doggicluck.webp",
-    alt: "Perros x 2 con tenders, cheddar y tocineta crunch",
+    alt: "Perros x 2 con tenders, cheddar y tocineta crunch + papas",
     featured: true,
     price: 23,
     ingredients: [
       "Pan mini perro",
       "Tenders pollo (65 gr)",
-      "Salsa cheddar cluck",
-      "Salsa cluckiihoney",
+      "Salsa de la casa",
       "Tocineta crunch",
       "Cebolla crispy",
       "Cebollín fresco",
@@ -77,7 +76,6 @@ export const MAIN_DISHES: MainDish[] = [
   },
   {
     name: "Big Cluck",
-    subtitle: "con papas",
     img: "/food/big_cluck.webp",
     alt: "Hamburguesa de churrasco de pollo apanado con queso munster",
     price: 24,
@@ -92,15 +90,13 @@ export const MAIN_DISHES: MainDish[] = [
   },
   {
     name: "Botanita Cluck",
-    subtitle: "con papas",
     img: "/food/botanita_cluck.webp",
     alt: "Hamburguesa de pollo apanado con doritos y guacamole",
     price: 26,
     ingredients: [
       "Churrasco pollo apanado (250 gr)",
       "Salsa La del Club",
-      "Salsa guacamole",
-      "Salsa cheddar cluck",
+      "Salsa queso crema y ajo",
       "Doritos",
       "Mix lechuga",
     ],
@@ -300,10 +296,10 @@ export function Menu() {
               </div>
               <div className="flex flex-1 flex-col p-5">
                 <h4 className="font-display text-2xl leading-tight text-ink">
-                  Crispy tenders
+                  Crispy tenders + papas
                 </h4>
                 <p className="mt-2 font-sans text-sm text-ink/80">
-                  Tenders de pollo 65 gr c/u, empanizados a mano.
+                  Tenders de pollo 65 gr c/u, empanizados a mano + papas.
                 </p>
                 <span className="mt-4 font-mono text-xs font-bold uppercase tracking-widest text-red">
                   Porciones
@@ -347,7 +343,7 @@ export function Menu() {
               </div>
               <div className="flex flex-1 flex-col p-5">
                 <h4 className="font-display text-2xl leading-tight text-ink">
-                  Cluck wings
+                  Cluck wings + papas
                 </h4>
 
                 <div className="mt-3 flex flex-wrap items-center gap-2">
