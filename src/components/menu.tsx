@@ -80,25 +80,30 @@ export const MAIN_DISHES: MainDish[] = [
     alt: "Hamburguesa de churrasco de pollo apanado con queso munster",
     price: 24,
     ingredients: [
-      "Churrasco pollo apanado (250 gr)",
-      "Salsa Hot club",
-      "Lechuga mix",
+      "Pan de papa",
+      "Salsa big",
       "Cebolla crispy",
-      "Queso Mounster",
-      "Tocineta crunch",
+      "Tocineta",
+      "Queso amarillo",
+      "Pollo",
+      "Tomate",
+      "Mix de lechuga",
     ],
   },
   {
-    name: "Botanita Cluck + papas",
+    name: "Botanera Cluck + papas",
     img: "/food/botanita_cluck.webp",
     alt: "Hamburguesa de pollo apanado con doritos y guacamole",
     price: 26,
     ingredients: [
-      "Churrasco pollo apanado (250 gr)",
-      "Salsa de la casa",
-      "Salsa queso crema y ajo",
+      "Pan de papa",
+      "Guacamole",
       "Doritos",
-      "Mix lechuga",
+      "Salsa de queso cheddar",
+      "Queso mozzarela",
+      "Pollo",
+      "Mix de lechuga",
+      "Salsa de queso crema y ajo",
     ],
   },
   {
@@ -133,7 +138,7 @@ export const WINGS = {
   flavors: [
     "Miel picante",
     "Miel mostaza",
-    "Buffalo",
+    "Búfalo",
     "BBQ Ahumada",
     "Ajo parmesano",
   ],
@@ -170,6 +175,7 @@ export const ADDITIONAL_SAUCES: PricedItem[] = [
   { name: "Miel mostaza", price: 3 },
   { name: "Bbq", price: 3 },
   { name: "Ajo parmesano", price: 3 },
+  { name: "Salsa búfalo", price: 3 },
 ];
 
 export const DRINKS: PricedItem[] = [
