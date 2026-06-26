@@ -490,51 +490,6 @@ export function Menu() {
               </article>
             </div>
           </div>
-
-          {/* Papas con Tenders combo — new combo under Acompañamientos */}
-          <div className="mt-8 grid gap-8 md:grid-cols-2">
-            {ACCOMPANIMENTS.map((item) => (
-              <article
-                key={item.name}
-                className="flex flex-col border-[3px] border-ink bg-yellow shadow-[6px_6px_0_0_var(--color-ink)]"
-              >
-                <div className="border-b-[3px] border-ink bg-cream">
-                  <Image
-                    src={item.img ?? "/placeholder.svg"}
-                    alt={item.alt ?? item.name}
-                    width={400}
-                    height={400}
-                    className="aspect-square w-full object-cover object-bottom"
-                  />
-                </div>
-                <div className="flex flex-1 flex-col p-5">
-                  <h4 className="font-display text-2xl leading-tight text-ink">
-                    {item.name}
-                  </h4>
-                  {item.price !== undefined && <PriceChip price={item.price} />}
-                  {item.price !== undefined && (
-                    <AgregarButton
-                      className="mt-3 inline-flex w-full items-center justify-center gap-2 border-[3px] border-ink bg-red px-4 py-2 font-mono text-xs font-bold uppercase tracking-widest text-bone shadow-[3px_3px_0_0_var(--color-ink)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0"
-                      ariaLabel={`Agregar ${item.name}`}
-                      onClick={() =>
-                        useCart.getState().addItem({
-                          kind: "combo",
-                          id: item.name,
-                          name: item.name,
-                          price: item.price as number,
-                          qty: 1,
-                        })
-                      }
-                    />
-                  )}
-                  <p className="mt-3 font-sans text-sm text-ink/80">
-                    Combo de papas y tenders, ideal para compartir o disfrutar
-                    solo.
-                  </p>
-                </div>
-              </article>
-            ))}
-          </div>
         </div>
 
         {/* 04 — Bebidas */}
