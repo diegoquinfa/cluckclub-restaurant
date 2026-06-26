@@ -112,7 +112,7 @@ export const MAIN_DISHES: MainDish[] = [
       "Salsa queso crema y ajo",
       "Tocineta crunch",
       "Mix lechugas",
-      "Salsa cluckiihoney",
+      "Salsa miel mostaza",
     ],
   },
 ];
